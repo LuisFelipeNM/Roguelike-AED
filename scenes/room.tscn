@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvixv6ht1xi63"]
 
 [ext_resource type="Script" path="res://scripts/room.gd" id="1_0mx3y"]
-[ext_resource type="Texture2D" uid="uid://bi21x6t5kvk6r" path="res://icon.svg" id="1_8chf5"]
+[ext_resource type="Texture2D" uid="uid://c4tuos8pbhtnu" path="res://assets/DUNGEON.png" id="2_gpx5x"]
 
 [node name="Room" type="Node2D"]
 script = ExtResource("1_0mx3y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_8chf5")
+texture = ExtResource("2_gpx5x")
 
 [node name="Button" type="Button" parent="."]
 show_behind_parent = true
@@ -15,5 +15,6 @@ offset_left = -66.0
 offset_top = -65.0
 offset_right = 65.0
 offset_bottom = 64.0
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
