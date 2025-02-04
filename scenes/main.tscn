@@ -1,6 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://qvnh12ahrh6o"]
 
 [ext_resource type="Script" path="res://scripts/tree.gd" id="1_wbv3e"]
+[ext_resource type="Texture2D" uid="uid://byet3hnvc7kbq" path="res://assets/Heroi.png" id="2_bnusn"]
 [ext_resource type="Texture2D" uid="uid://dkfo4s06tfwnc" path="res://assets/hero.png" id="2_3opn3"]
 [ext_resource type="Script" path="res://scripts/player_camera.gd" id="2_cb07m"]
 [ext_resource type="Script" path="res://scripts/hero.gd" id="3_y25c7"]
@@ -15,7 +16,6 @@ position = Vector2(960, 540)
 script = ExtResource("2_cb07m")
 
 [node name="Hero" type="Sprite2D" parent="."]
-position = Vector2(-138, 231)
-scale = Vector2(0.031953, 0.031953)
-texture = ExtResource("2_3opn3")
-script = ExtResource("3_y25c7")
+position = Vector2(0, -12)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_bnusn")
