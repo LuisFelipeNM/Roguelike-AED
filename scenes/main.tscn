@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/tree.gd" id="1_wbv3e"]
 [ext_resource type="Texture2D" uid="uid://byet3hnvc7kbq" path="res://assets/Heroi.png" id="2_bnusn"]
-[ext_resource type="Texture2D" uid="uid://dkfo4s06tfwnc" path="res://assets/hero.png" id="2_3opn3"]
 [ext_resource type="Script" path="res://scripts/player_camera.gd" id="2_cb07m"]
-[ext_resource type="Script" path="res://scripts/hero.gd" id="3_y25c7"]
+[ext_resource type="Script" path="res://scripts/hero.gd" id="4_grdpg"]
 
 [node name="Main" type="Node2D"]
 
@@ -19,3 +18,4 @@ script = ExtResource("2_cb07m")
 position = Vector2(0, -12)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_bnusn")
+script = ExtResource("4_grdpg")

@@ -1,7 +1,7 @@
 extends Node2D
 
-const ROOM_SPACING_X = 150
-const ROOM_SPACING_Y = 200
+const ROOM_SPACING_X = 300
+const ROOM_SPACING_Y = 300
 const MAX_HEIGHT = 9
 
 var node_scene = preload("res://scenes/room.tscn")
