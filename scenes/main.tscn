@@ -1,13 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://qvnh12ahrh6o"]
 
 [ext_resource type="Script" path="res://scripts/tree.gd" id="1_wbv3e"]
-[ext_resource type="Script" path="res://scripts/tree_node.gd" id="2_x4d3i"]
+[ext_resource type="Texture2D" uid="uid://dkfo4s06tfwnc" path="res://assets/hero.png" id="2_3opn3"]
 
 [node name="Main" type="Node2D"]
 
 [node name="Tree" type="Node2D" parent="."]
-position = Vector2(542, 72)
 script = ExtResource("1_wbv3e")
 
-[node name="TreeNode" type="Node2D" parent="Tree"]
-script = ExtResource("2_x4d3i")
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Hero" type="Sprite2D" parent="."]
+position = Vector2(-138, 231)
+scale = Vector2(0.031953, 0.031953)
+texture = ExtResource("2_3opn3")
