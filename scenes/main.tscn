@@ -1,11 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://qvnh12ahrh6o"]
+[gd_scene load_steps=6 format=3 uid="uid://qvnh12ahrh6o"]
 
+[ext_resource type="Texture2D" uid="uid://bonupe61qkywn" path="res://assets/Background3.png" id="1_itc18"]
 [ext_resource type="Script" path="res://scripts/tree.gd" id="1_wbv3e"]
 [ext_resource type="Texture2D" uid="uid://byet3hnvc7kbq" path="res://assets/Heroi.png" id="2_bnusn"]
 [ext_resource type="Script" path="res://scripts/player_camera.gd" id="2_cb07m"]
 [ext_resource type="Script" path="res://scripts/hero.gd" id="4_grdpg"]
 
 [node name="Main" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("1_itc18")
+region_enabled = true
+region_rect = Rect2(0, 0, 7000, 10000)
 
 [node name="Tree" type="Node2D" parent="."]
 script = ExtResource("1_wbv3e")
