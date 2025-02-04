@@ -10,7 +10,7 @@ var current_room_node: Node2D
 var height = 1
 
 @onready var hero = get_node("../Hero")
-@onready var camera = get_node("../Camera2D")
+@onready var camera = get_node("../PlayerCamera")
 
 
 func _ready():
@@ -19,6 +19,7 @@ func _ready():
 	root.get_node("Button").disabled = true
 	add_child(root)
 	current_room_node = root
+	hero.history.append(current_room_node)
 	hero.position = root.position
 	camera.position = root.position
 	generate_tree(root, 1)
@@ -32,6 +33,8 @@ func generate_tree(node, type: int):
 	var child_positions = []
 	var y_position = node.position.y + ROOM_SPACING_Y
 	var orders := []
+	
+	hero.history.append(node)
 
 	# Compute child positions based on the level structure
 	if (height == 1):
@@ -44,11 +47,10 @@ func generate_tree(node, type: int):
 	else:
 			# Subsequent levels (Type 2)
 			child_positions = [
-				node.position + Vector2(-2 * ROOM_SPACING_X, ROOM_SPACING_Y),
-				node.position + Vector2(0, ROOM_SPACING_Y),
-				node.position + Vector2(2 * ROOM_SPACING_X, ROOM_SPACING_Y)
+				Vector2(root.position.x-ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y),
+				Vector2(root.position.x, (height)*ROOM_SPACING_Y + root.position.y),
+				Vector2(root.position.x+ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y)
 			]
-			
 			orders = ["Left", "Middle", "Right"]
 
 	# Create and connect child nodes
@@ -62,6 +64,12 @@ func generate_tree(node, type: int):
 	# Lines for nodes that cannot be reached
 	for child in node.children:
 		draw_connection(node.position, child.position, Color(0.4, 0.4, 0.4))
+	
+	for child in current_room_node.children:
+		draw_connection(current_room_node.position, child.position, Color(0.4, 0.4, 0.4))
+	
+	for i in range(0, len(hero.history)-1):
+		draw_connection(hero.history[i].position, hero.history[i+1].position, Color(0.6, 0.6, 0))
 	
 	# Lines for nodes that can be reached
 	match (node.order):
@@ -81,6 +89,7 @@ func generate_tree(node, type: int):
 				node.children[0].get_node("Button").disabled = true
 	
 	height += 1
+	current_room_node = node
 
 
 # Draw a line to represent a connection
