@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://qvnh12ahrh6o"]
+
+[ext_resource type="Script" path="res://scripts/tree.gd" id="1_wbv3e"]
+[ext_resource type="Script" path="res://scripts/tree_node.gd" id="2_x4d3i"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Tree" type="Node2D" parent="."]
+position = Vector2(542, 72)
+script = ExtResource("1_wbv3e")
+
+[node name="TreeNode" type="Node2D" parent="Tree"]
+script = ExtResource("2_x4d3i")
