@@ -1,16 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://qvnh12ahrh6o"]
+[gd_scene load_steps=9 format=3 uid="uid://qvnh12ahrh6o"]
 
-[ext_resource type="Texture2D" uid="uid://bonupe61qkywn" path="res://assets/Background3.png" id="1_itc18"]
+[ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_ckjfw"]
+[ext_resource type="Shader" path="res://assets/background.gdshader" id="1_kwl12"]
 [ext_resource type="Script" path="res://scripts/tree.gd" id="1_wbv3e"]
-[ext_resource type="Texture2D" uid="uid://byet3hnvc7kbq" path="res://assets/Heroi.png" id="2_bnusn"]
 [ext_resource type="Script" path="res://scripts/player_camera.gd" id="2_cb07m"]
+[ext_resource type="Texture2D" uid="uid://c2qdvnq1thi8g" path="res://assets/tela branca.png" id="3_56pao"]
 [ext_resource type="Script" path="res://scripts/hero.gd" id="4_grdpg"]
+[ext_resource type="Texture2D" uid="uid://cuuwlbsgunyxf" path="res://assets/hero.png" id="6_bs5x0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_of13o"]
+shader = ExtResource("1_kwl12")
+shader_parameter/blur_radius = 0.005
+shader_parameter/darkness = 0.7
 
 [node name="Main" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
-texture = ExtResource("1_itc18")
+texture = ExtResource("1_ckjfw")
+region_enabled = true
+region_rect = Rect2(0, 0, 7000, 10000)
+
+[node name="Shader" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_of13o")
+texture = ExtResource("3_56pao")
 region_enabled = true
 region_rect = Rect2(0, 0, 7000, 10000)
 
@@ -22,7 +36,7 @@ position = Vector2(960, 540)
 script = ExtResource("2_cb07m")
 
 [node name="Hero" type="Sprite2D" parent="."]
-position = Vector2(0, -12)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_bnusn")
+position = Vector2(0, -5)
+scale = Vector2(2, 2)
+texture = ExtResource("6_bs5x0")
 script = ExtResource("4_grdpg")

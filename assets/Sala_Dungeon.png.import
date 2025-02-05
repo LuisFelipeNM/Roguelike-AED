@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwwp1vbmd1a3v"
-path="res://.godot/imported/Background2.png-810c13c5f4ceca41a8c9fcf7d03f1992.ctex"
+uid="uid://cux3orp3r1fbg"
+path="res://.godot/imported/Sala_Dungeon.png-8ad21b8d4ab7fe6267e3ad3822a7d6ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Background2.png"
-dest_files=["res://.godot/imported/Background2.png-810c13c5f4ceca41a8c9fcf7d03f1992.ctex"]
+source_file="res://assets/Sala_Dungeon.png"
+dest_files=["res://.godot/imported/Sala_Dungeon.png-8ad21b8d4ab7fe6267e3ad3822a7d6ec.ctex"]
 
 [params]
 

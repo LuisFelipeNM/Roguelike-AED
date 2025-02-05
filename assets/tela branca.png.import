@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4tuos8pbhtnu"
-path="res://.godot/imported/DUNGEON.png-d7512e2011d0d39e7d695e25115ce280.ctex"
+uid="uid://c2qdvnq1thi8g"
+path="res://.godot/imported/tela branca.png-213627030c22488aa2d9c4827b402005.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/DUNGEON.png"
-dest_files=["res://.godot/imported/DUNGEON.png-d7512e2011d0d39e7d695e25115ce280.ctex"]
+source_file="res://assets/tela branca.png"
+dest_files=["res://.godot/imported/tela branca.png-213627030c22488aa2d9c4827b402005.ctex"]
 
 [params]
 
