@@ -17,13 +17,17 @@ shader_parameter/darkness = 0.7
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
+position = Vector2(221.571, 643.706)
+scale = Vector2(1.46783, 1.14403)
 texture = ExtResource("1_ckjfw")
 region_enabled = true
-region_rect = Rect2(0, 0, 7000, 10000)
+region_rect = Rect2(0, 0, 5000, 7000)
 
 [node name="Shader" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_of13o")
+position = Vector2(820, 447)
+scale = Vector2(1.23429, 0.6526)
 texture = ExtResource("3_56pao")
 region_enabled = true
 region_rect = Rect2(0, 0, 7000, 10000)
