@@ -36,6 +36,35 @@ var textos_por_altura = {
 	14: "Capítulo 7: Bem e Mal
 		Inimigos derrotados, desafios superados. Porém, um formidável rival o espera... o último cavaleiro de Erebus. 
 		O que é essa sensação de piedade? O que incomoda nosso herói? Por que o próximo combate parece tão difícil, tão distante, tão... pessoal?",
+	16: ["Capítulo 8: A verdade
+
+		*A figura de Erebus aparece e o último capítulo é um diálogo*",
+		"Erebus: Muito bem... herói. Você passou por todas as salas da masmorra, venceu todos que estavam no seu caminho",
+
+		"Herói: É isso mesmo, seu deus egoísta. Eu vim acabar com esses seus jogos de dominação. Depois de tanta destruição, não espere um pingo sequer de piedade de mim!",
+
+		"Erebus: HAHAHAHAHA! VOCÊ NÃO ENTENDE MESMO, NÃO É!? Uma criança que tinha tudo: família, casa, conforto... mas mesmo assim, 
+		você decidiu ir embora e deixar tudo isso de lado, simplesmente porque mais riquezas, mais poder... era tentador, não era? 
+		E você ainda acha que tem o direito de me julgar!",
+
+		"Herói: Eu não me importo com o que você pensa, eu errei no passado e vim compensar todas as minhas falhas! Você perdeu!",
+
+
+		"Erebus: Isso é sempre divertido, esse diálogo fica cada vez melhor!",
+
+		"Herói: Como assim? Que diálogo, seu maldito!?",
+
+		"Erebus: O diálogo o qual eu finalmente revelo que você não passa de uma peça no meu teatro. O diálogo em que você descobre que tudo isso é só um passatempo para mim. 
+		Você realmente não tem nenhuma ideia do porquê o seu 'rival' era tão parecido com você? HAHAHAHAHAHA! Você nunca foi o único a despertar a Honra do Elysium. 
+		Outro antes de você tentaram, várias e várias vezes. O primeiro candidato a me derrotar me divertiu tanto, que eu decidi usá-lo como marionete para estimular o próximo.
+		Pode demorar quantos anos, ou até mesmo séculos para nascer outro, mas sempre que alguém desperta a Honra, eu envio um dos meus lacaios, disfarçado de mensageiro do reino, 
+		para chamá-lo até aqui. HAHAHAHAHAHA! ISSO SEMPRE ME ANIMA",
+
+		"Herói: O QUE!? Como isso... então eu...",
+
+		"Erebus: Sim, isso mesmo, você não é capaz de nada, a vida não é uma peça em que o vilão sempre perde no final. 
+		Mas chega de conversa, a partir daqui, você é só mais um dos meus soldados, e irá aguardar o próximo candidato chegar para tirar a sua vida, 
+		e consequentemente, me divertir um pouco mais... Adeus."]
 }
 
 func _ready():
@@ -49,8 +78,11 @@ func _ready():
 	camera.position = root.position
 	generate_tree(root, 1)
 
-
 func generate_tree(node, type: int):
+	if height == 16:
+		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
+		for dialogo in texto:
+				await display_text_box(dialogo)  # Usa await para garantir que cada diálogo seja exibido sequencialmente
 	if height >= MAX_HEIGHT:
 		# Gera a sala do chefe
 		return
@@ -116,8 +148,9 @@ func generate_tree(node, type: int):
 	# Verifica se a altura é par e exibe o texto correspondente
 	if height % 2 == 0:
 		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
-		display_text_box(texto)
+		await display_text_box(texto)  # Usa await para garantir que o diálogo seja exibido antes de continuar
 
+	
 	height += 1
 	current_room_node = node
 
@@ -154,6 +187,9 @@ func _on_button_pressed_from_node_scene(node: Node2D):
 # Exibe uma caixa de texto com um fundo retangular
 # Exibe uma caixa de texto com um fundo retangular
 func display_text_box(text: String):
+	# Pausa o jogo
+	get_tree().paused = true
+
 	# Cria um fundo retangular
 	var background = ColorRect.new()
 	background.color = Color(0, 0, 0, 0.8)  # Preto com 80% de opacidade
@@ -170,10 +206,13 @@ func display_text_box(text: String):
 	label.size = background.size  # Faz o texto ocupar o mesmo espaço do fundo
 	background.add_child(label)
 
-	# Remove o retângulo após alguns segundos
-	var timer = Timer.new()
-	timer.wait_time = 5  # Tempo em segundos para remover o retângulo
-	timer.one_shot = true
-	timer.timeout.connect(background.queue_free)  # Conecta o sinal timeout ao método queue_free
-	add_child(timer)
-	timer.start()
+	# Espera o jogador pressionar a tecla de espaço
+	await get_tree().create_timer(0.1).timeout  # Pequeno delay para evitar leitura imediata do input
+	while true:
+		if Input.is_action_just_pressed("ui_accept"):  # "ui_accept" é geralmente mapeado para a tecla de espaço
+			background.queue_free()
+			break
+		await get_tree().process_frame  # Espera o próximo frame
+
+	# Retoma o jogo
+	get_tree().paused = false
