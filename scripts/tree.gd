@@ -2,7 +2,7 @@ extends Node2D
 
 const ROOM_SPACING_X = 300
 const ROOM_SPACING_Y = 300
-const MAX_HEIGHT = 9
+const MAX_HEIGHT = 16
 
 var node_scene = preload("res://scenes/room.tscn")
 var root: Node2D
@@ -12,6 +12,31 @@ var height = 1
 @onready var hero = get_node("../Hero")
 @onready var camera = get_node("../PlayerCamera")
 
+# Textos específicos para cada altura par
+var textos_por_altura = {
+	2: "Capítulo 1: O prólogo
+		Tempos sombrios se alastram por todo o reino, forças superiores aproveitam-se de seus poderes para espalhar males por toda a população...",
+	4: "Capítulo 2: O chamado
+		Como uma última opção, o último mensageiro de Renova Éden, o reino dos últimos primordiais, foi enviado pela corte, antes de seu 
+		Rei Jafé, filho de Noé, descendente de Adão, ser amaldiçoado e capturado pelo mal superior...",
+	6: "Capítulo 3: Guerra
+		200 anos. Amaldiçoados por uma eterna e falsa esperança de vitória, após 200 anos do início da guerra, as tropas de Renova Éden começam a ceder. 
+		Culminados pela dor, todos os miseráveis sobreviventes sabem que o último resquício de mudança... depende da profecia.",
+	8: "Capítulo 4: A profecia
+		Rez a lenda que em um futuro próximo, um herói despertará a Honra do Elysium, herdada por aqueles dignos e merecedores...",
+	10: "Capítulo 5: Motivações
+		O mal superior, Erebus, deus da região escura do submundo, conhecia as histórias sobre tal figura heroica. 
+		Perturbado pela insegurança, ele enviou todas as suas tropas para o reino mais provável de possuir a Honra do Elysium. 
+		Guiado pela ganância, uma vontade inexplicável por dominação e poder, sua única opção era um massacre...",
+	12: "Capítulo 6: Despertar
+		O mensageiro tinha uma missão: chegar ao Oráculo de Júpiter, afim de alcançar aquele que herdaria a vontade e a honra dos descendentes de Adão. 
+		Sua resposta: o filho pródigo. Atraído pela avareza, cegado pela herança e inconsciente de suas capacidades, Perseu, 
+		o filho que abandonou suas obrigações para viver no luxo, despreocupadamente, recebeu em forma de visões, o pedido do último mensageiro. 
+		Guiado pela angustia de ter fugido por toda a sua vida, ele parte em busca de libertar o reino.",
+	14: "Capítulo 7: Bem e Mal
+		Inimigos derrotados, desafios superados. Porém, um formidável rival o espera... o último cavaleiro de Erebus. 
+		O que é essa sensação de piedade? O que incomoda nosso herói? Por que o próximo combate parece tão difícil, tão distante, tão... pessoal?",
+}
 
 func _ready():
 	root = node_scene.instantiate()
@@ -27,7 +52,7 @@ func _ready():
 
 func generate_tree(node, type: int):
 	if height >= MAX_HEIGHT:
-		# Generate boss room
+		# Gera a sala do chefe
 		return
 
 	var child_positions = []
@@ -36,24 +61,24 @@ func generate_tree(node, type: int):
 	
 	hero.history.append(node)
 
-	# Compute child positions based on the level structure
-	if (height == 1):
-			# First branch with two rooms (type 1)
-			child_positions = [
-				node.position + Vector2(-ROOM_SPACING_X, ROOM_SPACING_Y),
-				node.position + Vector2(ROOM_SPACING_X, ROOM_SPACING_Y)
-			]
-			orders = ["Left", "Right"]
+	# Calcula as posições dos filhos com base na estrutura do nível
+	if height == 1:
+		# Primeiro ramo com duas salas (tipo 1)
+		child_positions = [
+			node.position + Vector2(-ROOM_SPACING_X, ROOM_SPACING_Y),
+			node.position + Vector2(ROOM_SPACING_X, ROOM_SPACING_Y)
+		]
+		orders = ["Left", "Right"]
 	else:
-			# Subsequent levels (Type 2)
-			child_positions = [
-				Vector2(root.position.x-ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y),
-				Vector2(root.position.x, (height)*ROOM_SPACING_Y + root.position.y),
-				Vector2(root.position.x+ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y)
-			]
-			orders = ["Left", "Middle", "Right"]
+		# Níveis subsequentes (Tipo 2)
+		child_positions = [
+			Vector2(root.position.x-ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y),
+			Vector2(root.position.x, (height)*ROOM_SPACING_Y + root.position.y),
+			Vector2(root.position.x+ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y)
+		]
+		orders = ["Left", "Middle", "Right"]
 
-	# Create and connect child nodes
+	# Cria e conecta os nós filhos
 	for pos in child_positions:
 		var child = node_scene.instantiate()
 		child.initialize(pos, height, orders.pop_front())
@@ -61,7 +86,7 @@ func generate_tree(node, type: int):
 		child.get_node("Button").pressed.connect(_on_button_pressed_from_node_scene.bind(child))
 		add_child(child)
 	
-	# Lines for nodes that cannot be reached
+	# Linhas para nós que não podem ser alcançados
 	for child in node.children:
 		draw_connection(node.position, child.position, Color(0.4, 0.4, 0.4))
 	
@@ -71,12 +96,12 @@ func generate_tree(node, type: int):
 	for i in range(0, len(hero.history)-1):
 		draw_connection(hero.history[i].position, hero.history[i+1].position, Color(0.6, 0.6, 0))
 	
-	# Lines for nodes that can be reached
-	match (node.order):
+	# Linhas para nós que podem ser alcançados
+	match node.order:
 		"Left":
 			draw_connection(node.position, node.children[0].position)
 			draw_connection(node.position, node.children[1].position)
-			if (len(node.children) > 2):
+			if len(node.children) > 2:
 				node.children[2].get_node("Button").disabled = true
 		"Middle":
 			draw_connection(node.position, node.children[0].position)
@@ -85,14 +110,19 @@ func generate_tree(node, type: int):
 		"Right":
 			draw_connection(node.position, node.children[1].position)
 			draw_connection(node.position, node.children[2].position)
-			if (len(node.children) > 2):
+			if len(node.children) > 2:
 				node.children[0].get_node("Button").disabled = true
 	
+	# Verifica se a altura é par e exibe o texto correspondente
+	if height % 2 == 0:
+		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
+		display_text_box(texto)
+
 	height += 1
 	current_room_node = node
 
 
-# Draw a line to represent a connection
+# Desenha uma linha para representar uma conexão
 func draw_connection(from_position: Vector2, to_position: Vector2, color: Color = Color(1, 1, 1)):
 	var line = Line2D.new()
 	line.default_color = color
@@ -102,21 +132,48 @@ func draw_connection(from_position: Vector2, to_position: Vector2, color: Color 
 	add_child(line)
 
 
-# Clear the scene before rendering the next set of rooms
+# Limpa a cena antes de renderizar o próximo conjunto de salas
 func clear_scene():
 	for child in get_children():
 		child.queue_free()
 
 
+# Função chamada quando o botão de uma sala é pressionado
 func _on_button_pressed_from_node_scene(node: Node2D):
-	#node.get_node("Button").disabled = true
 	hero.position = node.position
 	camera.position = node.position
 	
 	for child in get_children():
-		print(child)
 		if child.has_node("Button"):
 			child.get_node("Button").disabled = true
 
-	print("Button pressed in the node scene!")
+	print("Botão pressionado na cena do nó!")
 	generate_tree(node, 2)
+
+
+# Exibe uma caixa de texto com um fundo retangular
+# Exibe uma caixa de texto com um fundo retangular
+func display_text_box(text: String):
+	# Cria um fundo retangular
+	var background = ColorRect.new()
+	background.color = Color(0, 0, 0, 0.8)  # Preto com 80% de opacidade
+	background.size = Vector2(1200, 250)  # Tamanho do retângulo
+	background.position = Vector2(hero.position.x - 600, hero.position.y - 400)  # Posição do retângulo (ajuste conforme necessário)
+	add_child(background)
+
+	# Cria o texto
+	var label = Label.new()
+	label.text = text
+	label.modulate = Color(1, 1, 1)  # Cor do texto (branco)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER  # Centraliza o texto horizontalmente
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER  # Centraliza o texto verticalmente
+	label.size = background.size  # Faz o texto ocupar o mesmo espaço do fundo
+	background.add_child(label)
+
+	# Remove o retângulo após alguns segundos
+	var timer = Timer.new()
+	timer.wait_time = 5  # Tempo em segundos para remover o retângulo
+	timer.one_shot = true
+	timer.timeout.connect(background.queue_free)  # Conecta o sinal timeout ao método queue_free
+	add_child(timer)
+	timer.start()
