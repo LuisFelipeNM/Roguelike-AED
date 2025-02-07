@@ -6,24 +6,31 @@ signal game_over
 @onready var health = get_node("Health")
 @onready var enemy_health = get_node("EnemyHealth")
 @onready var enemy = get_node("Enemy")
+@onready var ar = get_node("CanvasLayer/Ar")
+@onready var fogo = get_node("CanvasLayer/Fogo")
+@onready var agua = get_node("CanvasLayer/Agua")
+@onready var raio = get_node("CanvasLayer/Raio")
+@onready var terra = get_node("CanvasLayer/Terra")
+@onready var elements_assets = [fogo, agua, ar, terra, raio]
 
 var hero: Node2D
+var hero_stats: Node2D
 
 # Dicionário de vantagens elementais
 var vantagens = {
-"agua": "fogo",
-"fogo": "ar",
-"ar": "raio",
-"raio": "terra",
-"terra": "agua"
+	"agua": "fogo",
+	"fogo": "ar",
+	"ar": "raio",
+	"raio": "terra",
+	"terra": "agua"
 }
 
 var elementos_indices = {
-"fogo": 0,
-"agua": 1,
-"ar": 2,
-"terra": 3,
-"raio": 4
+	"fogo": 0,
+	"agua": 1,
+	"ar": 2,
+	"terra": 3,
+	"raio": 4
 }
 
 
@@ -37,29 +44,57 @@ func _process(_delta: float) -> void:
 	pass
 
 
-func initialize(original_hero: Node2D):
+func initialize(original_hero: Node2D, height: int):
+	hero_stats = original_hero
 	hero = original_hero.duplicate()
+	print(hero.elements)
+	print(enemy.elements)
 	add_child(hero)
 	hero.position = Vector2(160, 480)
 	enemy.set_frame(randi_range(0, 1))
+	enemy.elements = generate_charges(height)
+	
+	for i in range(5):
+		elements_assets[i].set_frame(enemy.elements[i])
 
 
 func _on_button_pressed() -> void:
 	# var attack_chance = hero.attack()
-	var poder_heroi = calcular_poder(hero, enemy)
-	var poder_vilao = calcular_poder(enemy, hero)
+	var poder_heroi = calcular_poder(hero_stats, enemy)
+	var poder_vilao = calcular_poder(enemy, hero_stats)
 	var hero_hit = simular_dado(poder_heroi, poder_vilao)
+
 	print(enemy.health)
 	if hero_hit:
+		print("Herói acertou")
 		update_health(enemy)
 	
 	var enemy_hit = simular_dado(poder_heroi, poder_vilao)
 
 	if !enemy_hit:
+		print("Inimigo acertou")
 		update_health(hero)
+
 	print("Poder do Herói: ", snapped(poder_heroi, 0.001))
 	print("Poder do Vilão: ", snapped(poder_vilao, 0.001))
 	pass # Replace with function body.
+
+func generate_charges(height: int):
+	var elements := [0, 0, 0, 0, 0]
+	var charges = max(1, (height/5))
+	print(charges)
+
+	while charges > 0:
+		var idx = randi() % 5
+
+		if elements[idx] < 4:
+			elements[idx] += 1
+			charges -= 1
+	
+	print("Gerado:")
+	print(elements)
+	return elements
+
 
 func update_health(target: Node2D):
 	target.health -= 1;

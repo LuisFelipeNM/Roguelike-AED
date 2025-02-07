@@ -293,7 +293,7 @@ func _on_button_pressed_from_node_scene(node: Node2D):
 		
 		battle_scene = load("res://scenes/battle_scene.tscn").instantiate()
 		get_tree().root.add_child(battle_scene)
-		battle_scene.initialize(hero)
+		battle_scene.initialize(hero, height)
 		battle_scene.position.y = node.position.y-ROOM_SPACING_Y
 		camera.position = Vector2(root.position.x, node.position.y+ROOM_SPACING_Y/2)
 		battle_scene.connect("battle_ended", _on_battle_ended)

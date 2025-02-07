@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6i2dwxeedqww"]
+[gd_scene load_steps=12 format=3 uid="uid://b6i2dwxeedqww"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_ciov0"]
 [ext_resource type="Texture2D" uid="uid://drf56qesfb377" path="res://assets/sala final.png" id="2_u4bn2"]
 [ext_resource type="Texture2D" uid="uid://bxk2xcmxjs6bf" path="res://assets/health.png" id="3_r5uyw"]
 [ext_resource type="Texture2D" uid="uid://d0s5nve6ckhyi" path="res://assets/inimigos.png" id="4_4d162"]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="5_ti6b2"]
+[ext_resource type="Texture2D" uid="uid://cbgswx1svqwrq" path="res://assets/levels ar.png" id="6_ffim2"]
+[ext_resource type="Texture2D" uid="uid://cc0ur4psluu6f" path="res://assets/levels fogo.png" id="7_ki7b8"]
+[ext_resource type="Texture2D" uid="uid://cxescraqt2mhm" path="res://assets/levels agua.png" id="8_lbko7"]
+[ext_resource type="Texture2D" uid="uid://b0rdqw833v7vm" path="res://assets/levels raio.png" id="9_jlf52"]
+[ext_resource type="Texture2D" uid="uid://dci7eqgjfr148" path="res://assets/levels terra.png" id="10_4l4jp"]
+[ext_resource type="Texture2D" uid="uid://c1upnv0vv6clp" path="res://assets/element icons.png" id="11_6xh0o"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_ciov0")
@@ -39,5 +45,49 @@ scale = Vector2(2.5, 2.5)
 texture = ExtResource("4_4d162")
 hframes = 2
 script = ExtResource("5_ti6b2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Health" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+position = Vector2(150, 90)
+scale = Vector2(4, 4)
+texture = ExtResource("3_r5uyw")
+hframes = 4
+
+[node name="Ar" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1792.5, 948.5)
+scale = Vector2(3, 3)
+texture = ExtResource("6_ffim2")
+hframes = 5
+
+[node name="Fogo" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1701.5, 948.5)
+scale = Vector2(3, 3)
+texture = ExtResource("7_ki7b8")
+hframes = 5
+
+[node name="Agua" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1747.5, 948.5)
+scale = Vector2(3, 3)
+texture = ExtResource("8_lbko7")
+hframes = 5
+
+[node name="Raio" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1882.5, 948.5)
+scale = Vector2(3, 3)
+texture = ExtResource("9_jlf52")
+hframes = 5
+
+[node name="Terra" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1837.5, 948.5)
+scale = Vector2(3, 3)
+texture = ExtResource("10_4l4jp")
+hframes = 5
+
+[node name="Icones" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1792.5, 1001.5)
+scale = Vector2(3, 3)
+texture = ExtResource("11_6xh0o")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
