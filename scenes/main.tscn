@@ -63,6 +63,7 @@ script = ExtResource("2_cb07m")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Health" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 position = Vector2(150, 90)
 scale = Vector2(4, 4)
 texture = ExtResource("8_xh6st")
