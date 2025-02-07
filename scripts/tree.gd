@@ -210,8 +210,8 @@ func display_text_box(text: String):
 	# Cria um fundo retangular
 	var background = ColorRect.new()
 	background.color = Color(0, 0, 0, 0.8)  # Preto com 80% de opacidade
-	background.size = Vector2(1200, 250)  # Tamanho do retângulo
-	background.position = Vector2(hero.position.x - 600, hero.position.y - 400)  # Posição do retângulo (ajuste conforme necessário)
+	background.size = Vector2(1400, 250)  # Tamanho do retângulo
+	background.position = Vector2(hero.position.x - 700, hero.position.y - 400)  # Posição do retângulo (ajuste conforme necessário)
 	add_child(background)
 
 	# Cria o texto
