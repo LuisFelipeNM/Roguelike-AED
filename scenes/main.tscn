@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qvnh12ahrh6o"]
+[gd_scene load_steps=18 format=3 uid="uid://qvnh12ahrh6o"]
 
 [ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_ckjfw"]
 [ext_resource type="Shader" path="res://assets/background.gdshader" id="1_kwl12"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://cxescraqt2mhm" path="res://assets/levels agua.png" id="9_rcui3"]
 [ext_resource type="Texture2D" uid="uid://b0rdqw833v7vm" path="res://assets/levels raio.png" id="10_5rr03"]
 [ext_resource type="Texture2D" uid="uid://dci7eqgjfr148" path="res://assets/levels terra.png" id="11_b0fwi"]
+[ext_resource type="Texture2D" uid="uid://1hghyiuppyb8" path="res://assets/villain.png" id="15_47ojx"]
+[ext_resource type="Script" path="res://scripts/villain.gd" id="16_t74p4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_of13o"]
 shader = ExtResource("1_kwl12")
@@ -41,6 +43,17 @@ region_rect = Rect2(0, 0, 7000, 10000)
 
 [node name="Tree" type="Node2D" parent="."]
 script = ExtResource("1_wbv3e")
+
+[node name="Villain" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("15_47ojx")
+script = ExtResource("16_t74p4")
+
+[node name="Hero" type="Sprite2D" parent="."]
+position = Vector2(0, -5)
+scale = Vector2(2, 2)
+texture = ExtResource("6_bs5x0")
+script = ExtResource("4_grdpg")
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 position = Vector2(960, 540)
@@ -88,9 +101,3 @@ hframes = 5
 position = Vector2(132, 1002)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
-
-[node name="Hero" type="Sprite2D" parent="."]
-position = Vector2(0, -5)
-scale = Vector2(2, 2)
-texture = ExtResource("6_bs5x0")
-script = ExtResource("4_grdpg")

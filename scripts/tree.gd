@@ -3,6 +3,7 @@ extends Node2D
 const ROOM_SPACING_X = 300
 const ROOM_SPACING_Y = 300
 const MAX_HEIGHT = 16
+const CHAR_SPACING = Vector2(20, 0)
 
 var node_scene = preload("res://scenes/room.tscn")
 var root: Node2D
@@ -10,6 +11,7 @@ var current_room_node: Node2D
 var height = 1
 
 @onready var hero = get_node("../Hero")
+@onready var villain = get_node("../Villain")
 @onready var camera = get_node("../PlayerCamera")
 @onready var ar = get_node("../CanvasLayer/Ar")
 @onready var fogo = get_node("../CanvasLayer/Fogo")
@@ -74,6 +76,7 @@ var textos_por_altura = {
 		e consequentemente, me divertir um pouco mais... Adeus."]
 }
 
+
 func _ready():
 	root = node_scene.instantiate()
 	root.initialize(Vector2(400, 100), 1)
@@ -81,12 +84,44 @@ func _ready():
 	add_child(root)
 	current_room_node = root
 	hero.history.append(current_room_node)
-	hero.position = root.position
+	hero.position = root.position - CHAR_SPACING
+	villain.room = root
+	villain.history.append(current_room_node)
+	villain.position = root.position + CHAR_SPACING
 	camera.position = root.position
-	generate_tree(root, 1)
+	generate_tree(root)
 
-func generate_tree(node, type: int):
-	if height == 16:
+
+func _generate_tree(level: int):
+	if level == MAX_HEIGHT:
+		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
+		for dialogo in texto:
+			await display_text_box(dialogo)  # Usa await para garantir que cada diálogo seja exibido sequencialmente
+		# Gera a sala do chefe
+		return
+	
+	var child_positions = []
+	var orders = []
+	
+	if level == 1:
+		# Primeiro ramo com duas salas (tipo 1)
+		child_positions = [
+			root.position + Vector2(-ROOM_SPACING_X, ROOM_SPACING_Y),
+			root.position + Vector2(ROOM_SPACING_X, ROOM_SPACING_Y)
+		]
+		orders = ["Left", "Right"]
+	else:
+		# Níveis subsequentes (Tipo 2)
+		child_positions = [
+			Vector2(root.position.x-ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y),
+			Vector2(root.position.x, (height)*ROOM_SPACING_Y + root.position.y),
+			Vector2(root.position.x+ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y)
+		]
+		orders = ["Left", "Middle", "Right"]
+		
+
+func generate_tree(node):
+	if height == MAX_HEIGHT:
 		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
 		for dialogo in texto:
 				await display_text_box(dialogo)  # Usa await para garantir que cada diálogo seja exibido sequencialmente
@@ -122,9 +157,11 @@ func generate_tree(node, type: int):
 	for pos in child_positions:
 		var child = node_scene.instantiate()
 		child.initialize(pos, height, orders.pop_front())
+		# villain.room.children.append(child)
 		node.children.append(child)
 		child.get_node("Button").pressed.connect(_on_button_pressed_from_node_scene.bind(child))
 		add_child(child)
+
 	
 	# Linhas para nós que não podem ser alcançados
 	for child in node.children:
@@ -134,7 +171,10 @@ func generate_tree(node, type: int):
 		draw_connection(current_room_node.position, child.position, Color(0.4, 0.4, 0.4))
 	
 	for i in range(0, len(hero.history)-1):
-		draw_connection(hero.history[i].position, hero.history[i+1].position, Color(0.6, 0.6, 0))
+		draw_connection(hero.history[i].position, hero.history[i+1].position, Color(0, 0, 1))
+	
+	for i in range(0, len(villain.history)-1):
+		draw_connection(villain.history[i].position, villain.history[i+1].position, Color(1, 0, 0))
 	
 	# Linhas para nós que podem ser alcançados
 	match node.order:
@@ -145,8 +185,11 @@ func generate_tree(node, type: int):
 				node.children[2].get_node("Button").disabled = true
 		"Middle":
 			draw_connection(node.position, node.children[0].position)
-			draw_connection(node.position, node.children[2].position)
-			node.children[1].get_node("Button").disabled = true
+			if len(node.children) == 3:
+				draw_connection(node.position, node.children[2].position)
+				node.children[1].get_node("Button").disabled = true
+			else:
+				draw_connection(node.position, node.children[1].position)
 		"Right":
 			draw_connection(node.position, node.children[1].position)
 			draw_connection(node.position, node.children[2].position)
@@ -182,25 +225,39 @@ func clear_scene():
 func _on_button_pressed_from_node_scene(node: Node2D):
 	hero.position = node.position
 	camera.position = node.position
+
+	var available_rooms := []
+	
+	for room in current_room_node.children:
+		print(room)
+		if room != node:
+			available_rooms.append(room)
+	
+	villain.room = villain.pick_room(available_rooms)
+	villain.position = villain.room.position + CHAR_SPACING
+	villain.history.append(villain.room)
+	update_elements(villain, villain.room.room_element)
+	
 	
 	for child in get_children():
 		if child.has_node("Button"):
 			child.get_node("Button").disabled = true
 
-	print("Botão pressionado na cena do nó!")
-	update_player_elements(node.room_element)
-	generate_tree(node, 2)
+	update_elements(hero, node.room_element)
+	generate_tree(node)
 
 
-func update_player_elements(element: int) -> void:
-	print("Element: ", element)
+func update_elements(entity: Node2D, element: int) -> void:
 	if element >= 1 and element <= 5:
 		var index = element - 1
-		hero.elements[index] = min(hero.elements[index] + 1, 4)
-		elements_assets[index].set_frame(hero.elements[index])
-		print("Player elements: ", hero.elements)
+		entity.elements[index] = min(entity.elements[index] + 1, 4)
+		
+		if entity == hero:
+			elements_assets[index].set_frame(hero.elements[index])
+		print("Entity elements: ", entity.elements)
 	else:
-		print("Element out of range.")	
+		print("Element out of range.")
+
 
 # Exibe uma caixa de texto com um fundo retangular
 func display_text_box(text: String):

@@ -5,21 +5,19 @@ var order: String
 var height: int
 var children := []
 var room_element: int
-var player_elements = [0,0,0,0,0]
 
 @onready var button = get_node("Button")
 @onready var sprite = get_node("Elements")
 
-func initialize(pos: Vector2, height: int, order: String = "Left"):
+func initialize(pos: Vector2, height: int, order: String = "Middle"):
 	position = pos
 	self.height = height
 	self.order = order
 	
 	room_element = randi_range(1, 5)
-	print("Room element: ", room_element)
 	if (Global.update):
 		call_deferred("update_sprite", room_element)
-	
+
 	Global.update = true
 
 
