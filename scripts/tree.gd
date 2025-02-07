@@ -233,7 +233,7 @@ func _on_button_pressed_from_node_scene(node: Node2D):
 		if room != node:
 			available_rooms.append(room)
 	
-	villain.room = villain.pick_room(available_rooms)
+	villain.room = villain.pick_room(available_rooms, hero.elements)
 	villain.position = villain.room.position + CHAR_SPACING
 	villain.history.append(villain.room)
 	update_elements(villain, villain.room.room_element)

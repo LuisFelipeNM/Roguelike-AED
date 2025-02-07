@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://qvnh12ahrh6o"]
+[gd_scene load_steps=19 format=3 uid="uid://qvnh12ahrh6o"]
 
 [ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_ckjfw"]
 [ext_resource type="Shader" path="res://assets/background.gdshader" id="1_kwl12"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dci7eqgjfr148" path="res://assets/levels terra.png" id="11_b0fwi"]
 [ext_resource type="Texture2D" uid="uid://1hghyiuppyb8" path="res://assets/villain.png" id="15_47ojx"]
 [ext_resource type="Script" path="res://scripts/villain.gd" id="16_t74p4"]
+[ext_resource type="Texture2D" uid="uid://c6piwkc3l5lgw" path="res://assets/setavermelha.png" id="17_i5t4t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_of13o"]
 shader = ExtResource("1_kwl12")
@@ -35,7 +36,7 @@ region_rect = Rect2(0, 0, 5000, 11000)
 [node name="Shader" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_of13o")
-position = Vector2(820, 2320.5)
+position = Vector2(720, 2648)
 scale = Vector2(1.23429, 1.0273)
 texture = ExtResource("3_56pao")
 region_enabled = true
@@ -101,3 +102,69 @@ hframes = 5
 position = Vector2(132, 1002)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
+
+[node name="Raio - wheel" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1760, 992)
+scale = Vector2(3, 3)
+texture = ExtResource("8_r1bbg")
+hframes = 5
+frame = 4
+
+[node name="Agua - wheel" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1600, 896)
+scale = Vector2(3, 3)
+texture = ExtResource("8_r1bbg")
+hframes = 5
+frame = 1
+
+[node name="Fogo - wheel" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1704, 824)
+scale = Vector2(3, 3)
+texture = ExtResource("8_r1bbg")
+hframes = 5
+
+[node name="Ar - wheel" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1816, 896)
+scale = Vector2(3, 3)
+texture = ExtResource("8_r1bbg")
+hframes = 5
+frame = 2
+
+[node name="Terra - wheel" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1648, 992)
+scale = Vector2(3, 3)
+texture = ExtResource("8_r1bbg")
+hframes = 5
+frame = 3
+
+[node name="Seta2" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1792, 944)
+rotation = 3.57792
+scale = Vector2(3, 3)
+texture = ExtResource("17_i5t4t")
+
+[node name="Seta" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 0, 1)
+self_modulate = Color(1, 0, 0, 1)
+position = Vector2(1640, 856)
+rotation = 0.785398
+scale = Vector2(3, 3)
+texture = ExtResource("17_i5t4t")
+
+[node name="Seta3" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1624, 944)
+rotation = -0.436332
+scale = Vector2(3, 3)
+texture = ExtResource("17_i5t4t")
+
+[node name="Seta4" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1768, 856)
+rotation = 2.35619
+scale = Vector2(3, 3)
+texture = ExtResource("17_i5t4t")
+
+[node name="Seta5" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1704, 992)
+rotation = -1.5708
+scale = Vector2(3, 3)
+texture = ExtResource("17_i5t4t")
