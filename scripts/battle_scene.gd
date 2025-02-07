@@ -9,6 +9,23 @@ signal game_over
 
 var hero: Node2D
 
+# Dicionário de vantagens elementais
+var vantagens = {
+"agua": "fogo",
+"fogo": "ar",
+"ar": "raio",
+"raio": "terra",
+"terra": "agua"
+}
+
+var elementos_indices = {
+"fogo": 0,
+"agua": 1,
+"ar": 2,
+"terra": 3,
+"raio": 4
+}
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,16 +46,19 @@ func initialize(original_hero: Node2D):
 
 func _on_button_pressed() -> void:
 	# var attack_chance = hero.attack()
-	var hero_hit;
-
+	var poder_heroi = calcular_poder(hero, enemy)
+	var poder_vilao = calcular_poder(enemy, hero)
+	var hero_hit = simular_dado(poder_heroi, poder_vilao)
+	print(enemy.health)
 	if hero_hit:
 		update_health(enemy)
 	
-	var enemy_hit;
+	var enemy_hit = simular_dado(poder_heroi, poder_vilao)
 
-	if enemy_hit:
+	if !enemy_hit:
 		update_health(hero)
-	
+	print("Poder do Herói: ", snapped(poder_heroi, 0.001))
+	print("Poder do Vilão: ", snapped(poder_vilao, 0.001))
 	pass # Replace with function body.
 
 func update_health(target: Node2D):
@@ -57,3 +77,51 @@ func update_health(target: Node2D):
 		if(enemy.health == 0):
 			emit_signal("battle_ended")
 			return
+
+func calcular_poder(personagem, oponente):
+	var poder_base = 100
+	var poder_total = poder_base
+
+	# Itera pelos índices do array de elementos
+	for i in range(personagem.elements.size()):
+		var carga_personagem = personagem.elements[i]  # Quantidade de cargas do personagem para o elemento atual
+		
+		# Obtém o nome do elemento correspondente ao índice
+		var elemento = elementos_indices.keys()[i]  
+		var elemento_vantajoso = vantagens.get(elemento, "")  # Elemento que sofre desvantagem
+
+		var carga_oponente = 0  # Define um valor padrão
+
+		# Se o elemento vantajoso existir no dicionário de índices, pega a carga correspondente do oponente
+		if elemento_vantajoso in elementos_indices:
+			var index_oponente = elementos_indices[elemento_vantajoso]
+			carga_oponente = oponente.elements[index_oponente]  # Quantidade de cargas do oponente
+
+		# Ajusta o poder baseado nas vantagens e cargas
+		if carga_personagem > 0:
+			if carga_oponente > 0:
+				poder_total *= pow(1.18, carga_personagem * carga_oponente)
+			else:
+				poder_total *= pow(1.05, carga_personagem)  # Pequeno bônus se houver carga
+
+	return poder_total
+	
+# Função para calcular a probabilidade de vitória
+func calcular_probabilidade(poder_personagem, poder_oponente):
+	var soma_poderes = poder_personagem + poder_oponente
+	var probabilidade_personagem = poder_personagem / soma_poderes
+	var probabilidade_oponente = poder_oponente / soma_poderes
+	return [probabilidade_personagem, probabilidade_oponente]
+
+# Função para simular o D20 e decidir o vencedor
+func simular_dado(poder_personagem, poder_oponente):
+	var probabilidades = calcular_probabilidade(poder_personagem, poder_oponente)
+	var probabilidade_personagem = probabilidades[0]  # Acessa a probabilidade do personagem
+	var limite_personagem = int(probabilidade_personagem * 20)  # Mapeia para o D20
+
+	var dado = randi() % 20 + 1  # Simula um lançamento de D20
+	if dado <= limite_personagem:
+		return true
+	else:
+		return false
+		

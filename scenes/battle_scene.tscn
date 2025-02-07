@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6i2dwxeedqww"]
+[gd_scene load_steps=6 format=3 uid="uid://bnkaqsf0kvh3u"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_ciov0"]
 [ext_resource type="Texture2D" uid="uid://drf56qesfb377" path="res://assets/sala final.png" id="2_u4bn2"]
