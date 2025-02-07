@@ -11,7 +11,6 @@ var height = 1
 
 @onready var hero = get_node("../Hero")
 @onready var camera = get_node("../PlayerCamera")
-
 # Textos específicos para cada altura par
 var textos_por_altura = {
 	2: "Capítulo 1: O prólogo
@@ -213,6 +212,6 @@ func display_text_box(text: String):
 			background.queue_free()
 			break
 		await get_tree().process_frame  # Espera o próximo frame
-
+	
 	# Retoma o jogo
 	get_tree().paused = false

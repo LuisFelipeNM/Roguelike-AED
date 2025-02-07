@@ -15,8 +15,12 @@ func initialize(pos: Vector2, height: int, order: String = "Left"):
 	self.height = height
 	self.order = order
 	
-	room_element = randi_range(0, 4)
+	room_element = randi_range(1, 5)
 	print("Room element: ", room_element)
+	if (Global.update):
+		call_deferred("update_sprite", room_element)
+	
+	Global.update = true
 # Called when the node enters the scene tree for the first time.
 func update_sprite(element: int) -> void:
 	if sprite:
@@ -24,13 +28,16 @@ func update_sprite(element: int) -> void:
 		sprite.visible = true
 		
 func update_player_elements(element: int) -> void:
-	if element >= 0 and element < player_elements.size():
-		# Cap = 4
-		player_elements[element] = min(player_elements[element] + 1, 4)
-		print("Player elements: ", player_elements)
+	print("Element: ", element)
+	if element >= 1 and element <= 5:
+		var index = element - 1
+		Global.player_elements[index] = min(Global.player_elements[index] + 1, 4)
+		print("Player elements: ", Global.player_elements)
+	else:
+		print("Element out of range.")
 
 func _ready() -> void:
-	update_sprite(room_element)
+	pass
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

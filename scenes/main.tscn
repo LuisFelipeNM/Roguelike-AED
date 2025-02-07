@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://qvnh12ahrh6o"]
+[gd_scene load_steps=16 format=3 uid="uid://qvnh12ahrh6o"]
 
 [ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_ckjfw"]
 [ext_resource type="Shader" path="res://assets/background.gdshader" id="1_kwl12"]
@@ -7,7 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://c2qdvnq1thi8g" path="res://assets/tela branca.png" id="3_56pao"]
 [ext_resource type="Script" path="res://scripts/hero.gd" id="4_grdpg"]
 [ext_resource type="Texture2D" uid="uid://cuuwlbsgunyxf" path="res://assets/hero.png" id="6_bs5x0"]
+[ext_resource type="Texture2D" uid="uid://cc0ur4psluu6f" path="res://assets/levels fogo.png" id="7_hqrw3"]
+[ext_resource type="Texture2D" uid="uid://cbgswx1svqwrq" path="res://assets/levels ar.png" id="7_ob8ej"]
+[ext_resource type="Texture2D" uid="uid://c1upnv0vv6clp" path="res://assets/element icons.png" id="8_r1bbg"]
 [ext_resource type="Texture2D" uid="uid://bxk2xcmxjs6bf" path="res://assets/health.png" id="8_xh6st"]
+[ext_resource type="Texture2D" uid="uid://cxescraqt2mhm" path="res://assets/levels agua.png" id="9_rcui3"]
+[ext_resource type="Texture2D" uid="uid://b0rdqw833v7vm" path="res://assets/levels raio.png" id="10_5rr03"]
+[ext_resource type="Texture2D" uid="uid://dci7eqgjfr148" path="res://assets/levels terra.png" id="11_b0fwi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_of13o"]
 shader = ExtResource("1_kwl12")
@@ -42,13 +48,51 @@ script = ExtResource("1_wbv3e")
 position = Vector2(960, 540)
 script = ExtResource("2_cb07m")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Health" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(150, 90)
+scale = Vector2(4, 4)
+texture = ExtResource("8_xh6st")
+hframes = 4
+
+[node name="Ar" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(132, 949)
+scale = Vector2(3, 3)
+texture = ExtResource("7_ob8ej")
+hframes = 5
+
+[node name="Fogo" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(41, 949)
+scale = Vector2(3, 3)
+texture = ExtResource("7_hqrw3")
+hframes = 5
+
+[node name="Agua" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(87, 949)
+scale = Vector2(3, 3)
+texture = ExtResource("9_rcui3")
+hframes = 5
+
+[node name="Raio" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(222, 949)
+scale = Vector2(3, 3)
+texture = ExtResource("10_5rr03")
+hframes = 5
+
+[node name="Terra" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(177, 949)
+scale = Vector2(3, 3)
+texture = ExtResource("11_b0fwi")
+hframes = 5
+
+[node name="Icones" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(132, 1002)
+scale = Vector2(3, 3)
+texture = ExtResource("8_r1bbg")
+
 [node name="Hero" type="Sprite2D" parent="."]
 position = Vector2(0, -5)
 scale = Vector2(2, 2)
 texture = ExtResource("6_bs5x0")
 script = ExtResource("4_grdpg")
-
-[node name="Health" type="Sprite2D" parent="."]
-position = Vector2(23, 9)
-texture = ExtResource("8_xh6st")
-hframes = 4
