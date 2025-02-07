@@ -7,7 +7,7 @@ const ZOOM_RATE: float = 8.0
 
 const START_POSITION: Vector2 = Vector2(400, 100)
 const BOUNDS_MIN: Vector2 = Vector2(-600, 100)
-const BOUNDS_MAX: Vector2 = Vector2(1400, 2000)
+const BOUNDS_MAX: Vector2 = Vector2(1400, 5000)
 
 var _target_zoom: float = 1.0
 

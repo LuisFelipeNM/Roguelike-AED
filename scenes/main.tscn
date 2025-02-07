@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://qvnh12ahrh6o"]
+[gd_scene load_steps=10 format=3 uid="uid://qvnh12ahrh6o"]
 
 [ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_ckjfw"]
 [ext_resource type="Shader" path="res://assets/background.gdshader" id="1_kwl12"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c2qdvnq1thi8g" path="res://assets/tela branca.png" id="3_56pao"]
 [ext_resource type="Script" path="res://scripts/hero.gd" id="4_grdpg"]
 [ext_resource type="Texture2D" uid="uid://cuuwlbsgunyxf" path="res://assets/hero.png" id="6_bs5x0"]
+[ext_resource type="Texture2D" uid="uid://bxk2xcmxjs6bf" path="res://assets/health.png" id="8_xh6st"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_of13o"]
 shader = ExtResource("1_kwl12")
@@ -16,18 +17,20 @@ shader_parameter/darkness = 0.7
 [node name="Main" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
+visible = false
 texture_repeat = 2
 position = Vector2(221.571, 643.706)
 scale = Vector2(1.46783, 1.14403)
 texture = ExtResource("1_ckjfw")
 region_enabled = true
-region_rect = Rect2(0, 0, 5000, 7000)
+region_rect = Rect2(0, 0, 5000, 11000)
 
 [node name="Shader" type="Sprite2D" parent="."]
+visible = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_of13o")
-position = Vector2(820, 447)
-scale = Vector2(1.23429, 0.6526)
+position = Vector2(820, 2320.5)
+scale = Vector2(1.23429, 1.0273)
 texture = ExtResource("3_56pao")
 region_enabled = true
 region_rect = Rect2(0, 0, 7000, 10000)
@@ -44,3 +47,8 @@ position = Vector2(0, -5)
 scale = Vector2(2, 2)
 texture = ExtResource("6_bs5x0")
 script = ExtResource("4_grdpg")
+
+[node name="Health" type="Sprite2D" parent="."]
+position = Vector2(23, 9)
+texture = ExtResource("8_xh6st")
+hframes = 4

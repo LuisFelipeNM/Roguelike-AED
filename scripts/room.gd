@@ -4,17 +4,38 @@ extends Node2D
 var order: String
 var height: int
 var children := []
+var room_element : int
+
+var player_elements = [0,0,0,0,0]
 @onready var button = get_node("Button")
+@onready var sprite = get_node("Elements")
 
 func initialize(pos: Vector2, height: int, order: String = "Left"):
 	position = pos
 	self.height = height
 	self.order = order
-
+	
+	room_element = randi_range(0, 4)
+	print("Room element: ", room_element)
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func update_sprite(element: int) -> void:
+	if sprite:
+		sprite.frame = element
+		sprite.visible = true
+		
+func update_player_elements(element: int) -> void:
+	if element >= 0 and element < player_elements.size():
+		# Cap = 4
+		player_elements[element] = min(player_elements[element] + 1, 4)
+		print("Player elements: ", player_elements)
 
+func _ready() -> void:
+	update_sprite(room_element)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+	
+func _on_button_pressed() -> void:
+	print("Button pressed! Room element: ", room_element)
+	update_player_elements(room_element)
