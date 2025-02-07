@@ -158,7 +158,6 @@ func generate_tree(node, type: int):
 		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
 		await display_text_box(texto)  # Usa await para garantir que o diálogo seja exibido antes de continuar
 
-	
 	height += 1
 	current_room_node = node
 
@@ -197,9 +196,9 @@ func update_player_elements(element: int) -> void:
 	print("Element: ", element)
 	if element >= 1 and element <= 5:
 		var index = element - 1
-		Global.player_elements[index] = min(Global.player_elements[index] + 1, 4)
-		elements_assets[index].set_frame(Global.player_elements[index])
-		print("Player elements: ", Global.player_elements)
+		hero.elements[index] = min(hero.elements[index] + 1, 4)
+		elements_assets[index].set_frame(hero.elements[index])
+		print("Player elements: ", hero.elements)
 	else:
 		print("Element out of range.")	
 
