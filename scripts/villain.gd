@@ -15,7 +15,7 @@ func pick_room(rooms):
 
 	# Need to write an algorithm for picking the optimal room
 	return valid_rooms.pick_random()
-	
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

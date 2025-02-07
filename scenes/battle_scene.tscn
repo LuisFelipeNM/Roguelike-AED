@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6i2dwxeedqww"]
+
+[ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_ciov0"]
+[ext_resource type="Texture2D" uid="uid://drf56qesfb377" path="res://assets/sala final.png" id="2_u4bn2"]
+[ext_resource type="Texture2D" uid="uid://bxk2xcmxjs6bf" path="res://assets/health.png" id="3_r5uyw"]
+[ext_resource type="Texture2D" uid="uid://d0s5nve6ckhyi" path="res://assets/inimigos.png" id="4_4d162"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="5_ti6b2"]
+
+[node name="BattleScene" type="Node2D"]
+script = ExtResource("1_ciov0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(417.222, 417.222)
+scale = Vector2(4.14778, 4.14778)
+texture = ExtResource("2_u4bn2")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 352.0
+offset_top = 640.0
+offset_right = 472.0
+offset_bottom = 696.0
+text = "ROLL"
+
+[node name="Health" type="Sprite2D" parent="."]
+position = Vector2(136, 88)
+scale = Vector2(4, 4)
+texture = ExtResource("3_r5uyw")
+hframes = 4
+
+[node name="EnemyHealth" type="Sprite2D" parent="."]
+position = Vector2(680, 88)
+scale = Vector2(4.33333, 4.33333)
+texture = ExtResource("3_r5uyw")
+hframes = 4
+
+[node name="Enemy" type="Sprite2D" parent="."]
+position = Vector2(672, 480)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("4_4d162")
+hframes = 2
+script = ExtResource("5_ti6b2")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

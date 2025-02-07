@@ -1,7 +1,6 @@
 extends Sprite2D
 
 var health: int = 3
-var history := []
 var elements := [0,0,0,0,0]
 
 # Called when the node enters the scene tree for the first time.

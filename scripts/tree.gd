@@ -9,6 +9,8 @@ var node_scene = preload("res://scenes/room.tscn")
 var root: Node2D
 var current_room_node: Node2D
 var height = 1
+var battle_scene
+var is_in_battle := false
 
 @onready var hero = get_node("../Hero")
 @onready var villain = get_node("../Villain")
@@ -220,33 +222,6 @@ func clear_scene():
 	for child in get_children():
 		child.queue_free()
 
-
-# Função chamada quando o botão de uma sala é pressionado
-func _on_button_pressed_from_node_scene(node: Node2D):
-	hero.position = node.position
-	camera.position = node.position
-
-	var available_rooms := []
-	
-	for room in current_room_node.children:
-		print(room)
-		if room != node:
-			available_rooms.append(room)
-	
-	villain.room = villain.pick_room(available_rooms)
-	villain.position = villain.room.position + CHAR_SPACING
-	villain.history.append(villain.room)
-	update_elements(villain, villain.room.room_element)
-	
-	
-	for child in get_children():
-		if child.has_node("Button"):
-			child.get_node("Button").disabled = true
-
-	update_elements(hero, node.room_element)
-	generate_tree(node)
-
-
 func update_elements(entity: Node2D, element: int) -> void:
 	if element >= 1 and element <= 5:
 		var index = element - 1
@@ -257,7 +232,6 @@ func update_elements(entity: Node2D, element: int) -> void:
 		print("Entity elements: ", entity.elements)
 	else:
 		print("Element out of range.")
-
 
 # Exibe uma caixa de texto com um fundo retangular
 func display_text_box(text: String):
@@ -290,3 +264,45 @@ func display_text_box(text: String):
 	
 	# Retoma o jogo
 	get_tree().paused = false
+
+# Função chamada quando o botão de uma sala é pressionado
+func _on_button_pressed_from_node_scene(node: Node2D):
+	if !is_in_battle:
+		hero.position = node.position
+		camera.position = node.position
+
+		var available_rooms := []
+		
+		for room in current_room_node.children:
+			print(room)
+			if room != node:
+				available_rooms.append(room)
+		
+		villain.room = villain.pick_room(available_rooms)
+		villain.position = villain.room.position + CHAR_SPACING
+		villain.history.append(villain.room)
+		update_elements(villain, villain.room.room_element)
+		  
+		for child in get_children():
+			if child.has_node("Button"):
+				child.get_node("Button").disabled = true
+
+		update_elements(hero, node.room_element)
+		await generate_tree(node)
+		
+		battle_scene = load("res://scenes/battle_scene.tscn").instantiate()
+		get_tree().root.add_child(battle_scene)
+		battle_scene.initialize(hero)
+		battle_scene.position.y = node.position.y-ROOM_SPACING_Y
+		camera.position = Vector2(root.position.x, node.position.y+ROOM_SPACING_Y/2)
+		battle_scene.connect("battle_ended", _on_battle_ended)
+		battle_scene.connect("game_over", _on_game_over)
+
+
+func _on_battle_ended():
+	is_in_battle = false
+	get_tree().root.remove_child(battle_scene)
+
+
+func _on_game_over():
+	pass
