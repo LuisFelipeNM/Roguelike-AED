@@ -12,7 +12,7 @@ func pick_room(rooms, hero_elements):
 		if i.order in orders[room.order]:
 			valid_rooms.append(i)
 
-<<<<<<< HEAD
+
 	# Get all the best elements to counter the hero
 	var villain_best_choices = get_best_counters(hero_elements)
 
@@ -42,11 +42,7 @@ func get_best_counters(hero_elements):
 			if counter != null and counter not in best_counters:
 				best_counters.append(counter)  # Store the correct index (1-5 range)
 	return best_counters
-=======
-	# Need to write an algorithm for picking the optimal room
-	return valid_rooms.pick_random()
 
->>>>>>> e13225cd82644ce7aceaabd0764f32ea06014a1f
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

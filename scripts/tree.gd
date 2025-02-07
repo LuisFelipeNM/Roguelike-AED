@@ -222,36 +222,7 @@ func clear_scene():
 	for child in get_children():
 		child.queue_free()
 
-<<<<<<< HEAD
 
-# Função chamada quando o botão de uma sala é pressionado
-func _on_button_pressed_from_node_scene(node: Node2D):
-	hero.position = node.position
-	camera.position = node.position
-
-	var available_rooms := []
-	
-	for room in current_room_node.children:
-		print(room)
-		if room != node:
-			available_rooms.append(room)
-	
-	villain.room = villain.pick_room(available_rooms, hero.elements)
-	villain.position = villain.room.position + CHAR_SPACING
-	villain.history.append(villain.room)
-	update_elements(villain, villain.room.room_element)
-	
-	
-	for child in get_children():
-		if child.has_node("Button"):
-			child.get_node("Button").disabled = true
-
-	update_elements(hero, node.room_element)
-	generate_tree(node)
-
-
-=======
->>>>>>> e13225cd82644ce7aceaabd0764f32ea06014a1f
 func update_elements(entity: Node2D, element: int) -> void:
 	if element >= 1 and element <= 5:
 		var index = element - 1
@@ -308,7 +279,7 @@ func _on_button_pressed_from_node_scene(node: Node2D):
 			if room != node:
 				available_rooms.append(room)
 		
-		villain.room = villain.pick_room(available_rooms)
+		villain.room = villain.pick_room(available_rooms, hero.elements)
 		villain.position = villain.room.position + CHAR_SPACING
 		villain.history.append(villain.room)
 		update_elements(villain, villain.room.room_element)
