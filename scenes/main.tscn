@@ -23,7 +23,6 @@ shader_parameter/darkness = 0.7
 [node name="Main" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
-visible = false
 texture_repeat = 2
 position = Vector2(221.571, 643.706)
 scale = Vector2(1.46783, 1.14403)
@@ -32,7 +31,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 5000, 11000)
 
 [node name="Shader" type="Sprite2D" parent="."]
-visible = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_of13o")
 position = Vector2(820, 2320.5)

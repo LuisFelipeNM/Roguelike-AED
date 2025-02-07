@@ -11,6 +11,14 @@ var height = 1
 
 @onready var hero = get_node("../Hero")
 @onready var camera = get_node("../PlayerCamera")
+@onready var ar = get_node("../CanvasLayer/Ar")
+@onready var fogo = get_node("../CanvasLayer/Fogo")
+@onready var agua = get_node("../CanvasLayer/Agua")
+@onready var raio = get_node("../CanvasLayer/Raio")
+@onready var terra = get_node("../CanvasLayer/Terra")
+@onready var elements_assets = [fogo, agua, ar, terra, raio]
+
+
 # Textos específicos para cada altura par
 var textos_por_altura = {
 	2: "Capítulo 1: O prólogo
@@ -82,6 +90,7 @@ func generate_tree(node, type: int):
 		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
 		for dialogo in texto:
 				await display_text_box(dialogo)  # Usa await para garantir que cada diálogo seja exibido sequencialmente
+
 	if height >= MAX_HEIGHT:
 		# Gera a sala do chefe
 		return
@@ -180,10 +189,20 @@ func _on_button_pressed_from_node_scene(node: Node2D):
 			child.get_node("Button").disabled = true
 
 	print("Botão pressionado na cena do nó!")
+	update_player_elements(node.room_element)
 	generate_tree(node, 2)
 
 
-# Exibe uma caixa de texto com um fundo retangular
+func update_player_elements(element: int) -> void:
+	print("Element: ", element)
+	if element >= 1 and element <= 5:
+		var index = element - 1
+		Global.player_elements[index] = min(Global.player_elements[index] + 1, 4)
+		elements_assets[index].set_frame(Global.player_elements[index])
+		print("Player elements: ", Global.player_elements)
+	else:
+		print("Element out of range.")	
+
 # Exibe uma caixa de texto com um fundo retangular
 func display_text_box(text: String):
 	# Pausa o jogo
@@ -198,7 +217,7 @@ func display_text_box(text: String):
 
 	# Cria o texto
 	var label = Label.new()
-	label.text = text
+	label.text = text + "\n\n\n(Pressione espaço para avançar)"
 	label.modulate = Color(1, 1, 1)  # Cor do texto (branco)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER  # Centraliza o texto horizontalmente
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER  # Centraliza o texto verticalmente
