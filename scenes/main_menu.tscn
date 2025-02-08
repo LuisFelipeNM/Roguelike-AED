@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckwsd06dq5mbh"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5jh5p"]
+[ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_g3r6c"]
+[ext_resource type="Shader" path="res://assets/background.gdshader" id="2_7cwt0"]
+[ext_resource type="Texture2D" uid="uid://c2qdvnq1thi8g" path="res://assets/tela branca.png" id="3_polbf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oem3n"]
+shader = ExtResource("2_7cwt0")
+shader_parameter/blur_radius = 0.005
+shader_parameter/darkness = 0.7
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5jh5p")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(221.571, 643.706)
+scale = Vector2(1.46783, 1.14403)
+texture = ExtResource("1_g3r6c")
+region_enabled = true
+region_rect = Rect2(0, 0, 5000, 11000)
+
+[node name="Shader" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_oem3n")
+position = Vector2(72.0001, 648.25)
+scale = Vector2(1.23429, 1.25605)
+texture = ExtResource("3_polbf")
+region_enabled = true
+region_rect = Rect2(0, 0, 7000, 10000)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 848.0
+offset_top = 576.0
+offset_right = 1016.0
+offset_bottom = 642.0
+alignment = 1
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "START"
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "EXIT"
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

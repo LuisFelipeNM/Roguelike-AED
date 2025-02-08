@@ -92,44 +92,20 @@ func _ready():
 	villain.position = root.position + CHAR_SPACING
 	camera.position = root.position
 	generate_tree(root)
-
-
-func _generate_tree(level: int):
-	if level == MAX_HEIGHT:
-		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
-		for dialogo in texto:
-			await display_text_box(dialogo)  # Usa await para garantir que cada diálogo seja exibido sequencialmente
-		# Gera a sala do chefe
-		return
-	
-	var child_positions = []
-	var orders = []
-	
-	if level == 1:
-		# Primeiro ramo com duas salas (tipo 1)
-		child_positions = [
-			root.position + Vector2(-ROOM_SPACING_X, ROOM_SPACING_Y),
-			root.position + Vector2(ROOM_SPACING_X, ROOM_SPACING_Y)
-		]
-		orders = ["Left", "Right"]
-	else:
-		# Níveis subsequentes (Tipo 2)
-		child_positions = [
-			Vector2(root.position.x-ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y),
-			Vector2(root.position.x, (height)*ROOM_SPACING_Y + root.position.y),
-			Vector2(root.position.x+ROOM_SPACING_X, (height) * ROOM_SPACING_Y + root.position.y)
-		]
-		orders = ["Left", "Middle", "Right"]
 		
 
 func generate_tree(node):
-	if height == MAX_HEIGHT:
-		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
-		for dialogo in texto:
-				await display_text_box(dialogo)  # Usa await para garantir que cada diálogo seja exibido sequencialmente
+	if height == MAX_HEIGHT:  
+		var final_room = node_scene.instantiate()
+		final_room.initialize(Vector2(root.position.x, node.position.y+ROOM_SPACING_Y), height)
+		draw_connection(node.position, final_room.position, Color(1, 1, 1))
+		final_room.get_node("Button").pressed.connect(_on_button_pressed_from_node_scene.bind(final_room))
+		add_child(final_room)
+		camera.position = Vector2(root.position.x, node.position.y+ROOM_SPACING_Y)
+		final_room.connect("battle_ended", _on_battle_ended)
+		final_room.connect("game_over", _on_game_over)
+		
 
-	if height >= MAX_HEIGHT:
-		# Gera a sala do chefe
 		return
 
 	var child_positions = []
@@ -234,6 +210,7 @@ func update_elements(entity: Node2D, element: int) -> void:
 	else:
 		print("Element out of range.")
 
+
 # Exibe uma caixa de texto com um fundo retangular
 func display_text_box(text: String):
 	# Pausa o jogo
@@ -269,31 +246,38 @@ func display_text_box(text: String):
 # Função chamada quando o botão de uma sala é pressionado
 func _on_button_pressed_from_node_scene(node: Node2D):
 	if !is_in_battle:
-		hero.position = node.position
 		camera.position = node.position
 
-		var available_rooms := []
-		
-		for room in current_room_node.children:
-			print(room)
-			if room != node:
-				available_rooms.append(room)
-		
-		villain.room = villain.pick_room(available_rooms, hero.elements)
-		villain.position = villain.room.position + CHAR_SPACING
-		villain.history.append(villain.room)
-		update_elements(villain, villain.room.room_element)
-		  
-		for child in get_children():
-			if child.has_node("Button"):
-				child.get_node("Button").disabled = true
+		# Boss
+		if (node.height == MAX_HEIGHT):
+			villain.room = node
+			villain.position = node.position + CHAR_SPACING
+			hero.position = node.position - CHAR_SPACING
 
-		update_elements(hero, node.room_element)
-		await generate_tree(node)
+		# Normal rooms
+		else:
+			hero.position = node.position
+			var available_rooms := []
 		
+			for room in current_room_node.children:
+				print(room)
+				if room != node:
+					available_rooms.append(room)
+
+			villain.room = villain.pick_room(available_rooms, hero.elements)
+			villain.position = villain.room.position + CHAR_SPACING
+			villain.history.append(villain.room)
+			update_elements(villain, villain.room.room_element)
+			update_elements(hero, node.room_element)
+			for child in get_children():
+				if child.has_node("Button"):
+					child.get_node("Button").disabled = true
+			await generate_tree(node)
+
+
 		battle_scene = load("res://scenes/battle_scene.tscn").instantiate()
 		get_tree().root.add_child(battle_scene)
-		battle_scene.initialize(hero, height)
+		battle_scene.initialize(hero, node.height, villain)
 		battle_scene.position.y = node.position.y-ROOM_SPACING_Y
 		camera.position = Vector2(root.position.x, node.position.y+ROOM_SPACING_Y/2)
 		battle_scene.connect("battle_ended", _on_battle_ended)
@@ -306,4 +290,4 @@ func _on_battle_ended():
 
 
 func _on_game_over():
-	pass
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

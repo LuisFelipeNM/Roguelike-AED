@@ -1,5 +1,6 @@
 extends Sprite2D
 
+var health: int = 3
 var room: Node2D
 var history := []
 var elements = [0,0,0,0,0]

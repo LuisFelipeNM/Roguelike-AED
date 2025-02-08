@@ -34,7 +34,7 @@ texture = ExtResource("3_r5uyw")
 hframes = 4
 
 [node name="EnemyHealth" type="Sprite2D" parent="."]
-position = Vector2(680, 88)
+position = Vector2(688, 88)
 scale = Vector2(4.33333, 4.33333)
 texture = ExtResource("3_r5uyw")
 hframes = 4
@@ -89,5 +89,12 @@ hframes = 5
 position = Vector2(1792.5, 1001.5)
 scale = Vector2(3, 3)
 texture = ExtResource("11_6xh0o")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 328.0
+offset_top = 472.0
+offset_right = 512.0
+offset_bottom = 504.0
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

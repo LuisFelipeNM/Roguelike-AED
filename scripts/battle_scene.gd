@@ -3,6 +3,8 @@ extends Node2D
 signal battle_ended
 signal game_over
 
+@onready var label = get_node("Label")
+@onready var og_villain = get_node("../Main/Villain")
 @onready var health = get_node("Health")
 @onready var enemy_health = get_node("EnemyHealth")
 @onready var enemy = get_node("Enemy")
@@ -15,6 +17,8 @@ signal game_over
 
 var hero: Node2D
 var hero_stats: Node2D
+
+const MAX_HEIGHT = 16
 
 # Dicionário de vantagens elementais
 var vantagens = {
@@ -44,34 +48,46 @@ func _process(_delta: float) -> void:
 	pass
 
 
-func initialize(original_hero: Node2D, height: int):
+func initialize(original_hero: Node2D, height: int, villain: Node2D):
+	print("Height: ", height)
 	hero_stats = original_hero
 	hero = original_hero.duplicate()
 	print(hero.elements)
 	print(enemy.elements)
 	add_child(hero)
 	hero.position = Vector2(160, 480)
-	enemy.set_frame(randi_range(0, 1))
-	enemy.elements = generate_charges(height)
+	
+	if height == MAX_HEIGHT:
+		villain = og_villain.duplicate()
+		#var villain_body = villain.duplicate()
+		villain.position = enemy.position
+		add_child(villain)
+		enemy.position = Vector2(-200, -200)
+		enemy = og_villain
+	else:
+		enemy.set_frame(randi_range(0, 1))
+		enemy.elements = generate_charges(height)
 	
 	for i in range(5):
 		elements_assets[i].set_frame(enemy.elements[i])
 
 
 func _on_button_pressed() -> void:
-	# var attack_chance = hero.attack()
 	var poder_heroi = calcular_poder(hero_stats, enemy)
 	var poder_vilao = calcular_poder(enemy, hero_stats)
 	var hero_hit = simular_dado(poder_heroi, poder_vilao)
 
 	print(enemy.health)
 	if hero_hit:
+		label.text = "Hit!"
 		print("Herói acertou")
 		update_health(enemy)
+	else:
+		label.text = "Miss!"
 	
-	var enemy_hit = simular_dado(poder_heroi, poder_vilao)
+	var enemy_hit = simular_dado(poder_vilao, poder_heroi)
 
-	if !enemy_hit:
+	if enemy_hit:
 		print("Inimigo acertou")
 		update_health(hero)
 
@@ -81,7 +97,7 @@ func _on_button_pressed() -> void:
 
 func generate_charges(height: int):
 	var elements := [0, 0, 0, 0, 0]
-	var charges = max(1, (height/5))
+	var charges = height/5
 	print(charges)
 
 	while charges > 0:
@@ -135,9 +151,9 @@ func calcular_poder(personagem, oponente):
 		# Ajusta o poder baseado nas vantagens e cargas
 		if carga_personagem > 0:
 			if carga_oponente > 0:
-				poder_total *= pow(1.18, carga_personagem * carga_oponente)
+				poder_total *= pow(1.2, carga_personagem * carga_oponente)
 			else:
-				poder_total *= pow(1.05, carga_personagem)  # Pequeno bônus se houver carga
+				poder_total *= pow(1.10, carga_personagem)  # Pequeno bônus se houver carga
 
 	return poder_total
 	

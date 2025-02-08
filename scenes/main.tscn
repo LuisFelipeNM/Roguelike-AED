@@ -36,8 +36,8 @@ region_rect = Rect2(0, 0, 5000, 11000)
 [node name="Shader" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_of13o")
-position = Vector2(1344, 3304)
-scale = Vector2(1.23429, 1.0273)
+position = Vector2(72.0001, 648.25)
+scale = Vector2(1.23429, 1.25605)
 texture = ExtResource("3_56pao")
 region_enabled = true
 region_rect = Rect2(0, 0, 7000, 10000)
@@ -104,47 +104,49 @@ position = Vector2(132, 1002)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
 
-[node name="Raio - wheel" type="Sprite2D" parent="CanvasLayer"]
+[node name="Wheel" type="Node2D" parent="CanvasLayer"]
+
+[node name="Raio - wheel" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1822.5, 206.5)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
 hframes = 5
 frame = 4
 
-[node name="Agua - wheel" type="Sprite2D" parent="CanvasLayer"]
+[node name="Agua - wheel" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1662.5, 110.5)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
 hframes = 5
 frame = 1
 
-[node name="Fogo - wheel" type="Sprite2D" parent="CanvasLayer"]
+[node name="Fogo - wheel" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1766.5, 38.5)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
 hframes = 5
 
-[node name="Ar - wheel" type="Sprite2D" parent="CanvasLayer"]
+[node name="Ar - wheel" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1878.5, 110.5)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
 hframes = 5
 frame = 2
 
-[node name="Terra - wheel" type="Sprite2D" parent="CanvasLayer"]
+[node name="Terra - wheel" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1710.5, 206.5)
 scale = Vector2(3, 3)
 texture = ExtResource("8_r1bbg")
 hframes = 5
 frame = 3
 
-[node name="Seta2" type="Sprite2D" parent="CanvasLayer"]
+[node name="Seta2" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1854.5, 158.5)
-rotation = 3.57792
+rotation = -2.70527
 scale = Vector2(3, 3)
 texture = ExtResource("17_i5t4t")
 
-[node name="Seta" type="Sprite2D" parent="CanvasLayer"]
+[node name="Seta" type="Sprite2D" parent="CanvasLayer/Wheel"]
 modulate = Color(1, 1, 0, 1)
 self_modulate = Color(1, 0, 0, 1)
 position = Vector2(1702.5, 70.5)
@@ -152,19 +154,19 @@ rotation = 0.785398
 scale = Vector2(3, 3)
 texture = ExtResource("17_i5t4t")
 
-[node name="Seta3" type="Sprite2D" parent="CanvasLayer"]
+[node name="Seta3" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1686.5, 158.5)
 rotation = -0.436332
 scale = Vector2(3, 3)
 texture = ExtResource("17_i5t4t")
 
-[node name="Seta4" type="Sprite2D" parent="CanvasLayer"]
+[node name="Seta4" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1830.5, 70.5)
 rotation = 2.35619
 scale = Vector2(3, 3)
 texture = ExtResource("17_i5t4t")
 
-[node name="Seta5" type="Sprite2D" parent="CanvasLayer"]
+[node name="Seta5" type="Sprite2D" parent="CanvasLayer/Wheel"]
 position = Vector2(1766.5, 206.5)
 rotation = -1.5708
 scale = Vector2(3, 3)
