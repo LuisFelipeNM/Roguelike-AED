@@ -96,16 +96,37 @@ func _on_button_pressed() -> void:
 	pass # Replace with function body.
 
 func generate_charges(height: int):
-	var elements := [0, 0, 0, 0, 0]
-	var charges = height/5
-	print(charges)
+	var elements := [0, 0, 0, 0, 0]  # Inicializa o vetor de elementos
+	var charges = height / 3  # Calcula o número de cargas com base na altura
+	print("Cargas iniciais: ", charges)
 
 	while charges > 0:
-		var idx = randi() % 5
+		var idx = randi() % 5  # Escolhe um índice aleatório (0 a 4)
 
-		if elements[idx] < 4:
-			elements[idx] += 1
-			charges -= 1
+		# Define o valor a ser adicionado com base na altura
+		var value_to_add := 1
+		if height >= 9 && height <= 14:
+			value_to_add = 2
+		elif height > 14:
+			value_to_add = 3
+
+		# Verifica se o valor a ser adicionado ultrapassa o limite de 5
+		if elements[idx] + value_to_add <= 5:
+			elements[idx] += value_to_add
+			charges -= value_to_add
+		else:
+			# Se ultrapassar, adiciona o máximo possível e recalcula o excesso
+			var excess = (elements[idx] + value_to_add) - 5
+			elements[idx] = 5  # Define o valor máximo para o índice atual
+			charges -= (value_to_add - excess)  # Reduz as cargas pelo valor adicionado
+
+			# Redistribui o excesso para outros índices
+			while excess > 0:
+				var new_idx = randi() % 5  # Escolhe um novo índice aleatório
+				if elements[new_idx] < 5:  # Verifica se o novo índice pode receber o excesso
+					var add_amount = min(excess, 5 - elements[new_idx])
+					elements[new_idx] += add_amount
+					excess -= add_amount
 	
 	print("Gerado:")
 	print(elements)
@@ -151,9 +172,9 @@ func calcular_poder(personagem, oponente):
 		# Ajusta o poder baseado nas vantagens e cargas
 		if carga_personagem > 0:
 			if carga_oponente > 0:
-				poder_total *= pow(1.2, carga_personagem * carga_oponente)
+				poder_total *= pow(1.3, carga_personagem)
 			else:
-				poder_total *= pow(1.10, carga_personagem)  # Pequeno bônus se houver carga
+				poder_total *= pow(1.15, carga_personagem)  # Pequeno bônus se houver carga
 
 	return poder_total
 	
