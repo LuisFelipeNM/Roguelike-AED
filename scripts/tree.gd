@@ -86,6 +86,8 @@ func _ready():
 	add_child(root)
 	current_room_node = root
 	hero.history.append(current_room_node)
+	update_elements(hero, root.room_element)
+	update_elements(villain, root.room_element)
 	hero.position = root.position - CHAR_SPACING
 	villain.room = root
 	villain.history.append(current_room_node)
@@ -243,6 +245,7 @@ func display_text_box(text: String):
 	# Retoma o jogo
 	get_tree().paused = false
 
+
 # Função chamada quando o botão de uma sala é pressionado
 func _on_button_pressed_from_node_scene(node: Node2D):
 	if !is_in_battle:
@@ -274,12 +277,15 @@ func _on_button_pressed_from_node_scene(node: Node2D):
 					child.get_node("Button").disabled = true
 			await generate_tree(node)
 
+		#for child in node.children:
+		#	child.get_node("Button").disabled = true
 
 		battle_scene = load("res://scenes/battle_scene.tscn").instantiate()
 		get_tree().root.add_child(battle_scene)
 		battle_scene.initialize(hero, node.height, villain)
 		battle_scene.position.y = node.position.y-ROOM_SPACING_Y
 		camera.position = Vector2(root.position.x, node.position.y+ROOM_SPACING_Y/2)
+		is_in_battle = true
 		battle_scene.connect("battle_ended", _on_battle_ended)
 		battle_scene.connect("game_over", _on_game_over)
 
@@ -290,4 +296,5 @@ func _on_battle_ended():
 
 
 func _on_game_over():
+	get_tree().root.remove_child(battle_scene)
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

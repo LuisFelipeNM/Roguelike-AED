@@ -15,10 +15,10 @@ func initialize(pos: Vector2, height: int, order: String = "Middle"):
 	self.order = order
 	
 	room_element = randi_range(1, 5)
-	if (Global.update):
-		call_deferred("update_sprite", room_element)
+	#if (Global.update):
+	call_deferred("update_sprite", room_element)
 
-	Global.update = true
+	#Global.update = true
 
 
 # Called when the node enters the scene tree for the first time.

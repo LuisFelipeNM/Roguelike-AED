@@ -33,6 +33,13 @@ texture = ExtResource("1_ckjfw")
 region_enabled = true
 region_rect = Rect2(0, 0, 5000, 11000)
 
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
+position = Vector2(959, 552)
+energy = 0.57
+shadow_enabled = true
+max_distance = 10.0
+
 [node name="Shader" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_of13o")
@@ -57,7 +64,7 @@ texture = ExtResource("6_bs5x0")
 script = ExtResource("4_grdpg")
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
-position = Vector2(960, 540)
+position = Vector2(952, 536)
 script = ExtResource("2_cb07m")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -171,3 +178,6 @@ position = Vector2(1766.5, 206.5)
 rotation = -1.5708
 scale = Vector2(3, 3)
 texture = ExtResource("17_i5t4t")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+position = Vector2(952, 536)
