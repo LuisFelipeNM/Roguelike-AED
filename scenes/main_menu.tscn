@@ -1,14 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckwsd06dq5mbh"]
+[gd_scene load_steps=9 format=3 uid="uid://ckwsd06dq5mbh"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5jh5p"]
 [ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_g3r6c"]
 [ext_resource type="Shader" path="res://assets/background.gdshader" id="2_7cwt0"]
 [ext_resource type="Texture2D" uid="uid://c2qdvnq1thi8g" path="res://assets/tela branca.png" id="3_polbf"]
+[ext_resource type="FontFile" uid="uid://buq6pog0bo51c" path="res://assets/Minecraft.ttf" id="5_6wbt1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oem3n"]
 shader = ExtResource("2_7cwt0")
 shader_parameter/blur_radius = 0.005
 shader_parameter/darkness = 0.7
+
+[sub_resource type="Gradient" id="Gradient_hhaib"]
+offsets = PackedFloat32Array(0.201299, 0.532468, 0.824675)
+colors = PackedColorArray(0, 0, 0, 1, 0.241156, 0.241156, 0.241156, 1, 0.0454545, 0.0454545, 0.0454545, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_60tmd"]
+gradient = SubResource("Gradient_hhaib")
+fill_from = Vector2(0.2, 0)
+fill_to = Vector2(0.8, 0)
+metadata/_snap_enabled = true
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -36,21 +47,66 @@ texture = ExtResource("3_polbf")
 region_enabled = true
 region_rect = Rect2(0, 0, 7000, 10000)
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.687215, 0.687215, 0.687215, 0.490196)
+position = Vector2(936, 592)
+scale = Vector2(133.375, 195.875)
+texture = SubResource("GradientTexture2D_60tmd")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 848.0
-offset_top = 576.0
-offset_right = 1016.0
-offset_bottom = 642.0
+offset_left = 720.0
+offset_top = 544.0
+offset_right = 888.0
+offset_bottom = 664.0
+scale = Vector2(2.805, 2.805)
 alignment = 1
 
 [node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("5_6wbt1")
 text = "START"
 
 [node name="Exit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("5_6wbt1")
 text = "EXIT"
+
+[node name="TitleShadow" type="Label" parent="."]
+offset_left = 384.0
+offset_top = 352.0
+offset_right = 1562.0
+offset_bottom = 552.0
+theme_override_colors/font_color = Color(0, 0, 0, 0.486275)
+theme_override_fonts/font = ExtResource("5_6wbt1")
+theme_override_font_sizes/font_size = 180
+text = "Hero Journey"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="."]
+offset_left = 400.0
+offset_top = 336.0
+offset_right = 1514.0
+offset_bottom = 528.0
+theme_override_fonts/font = ExtResource("5_6wbt1")
+theme_override_font_sizes/font_size = 180
+text = "Hero Journey"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TitleDepth" type="Label" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 344.0
+offset_right = 1945.0
+offset_bottom = 536.0
+theme_override_colors/font_color = Color(0, 0, 0, 0.156863)
+theme_override_fonts/font = ExtResource("5_6wbt1")
+theme_override_font_sizes/font_size = 180
+text = "Hero Journey"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

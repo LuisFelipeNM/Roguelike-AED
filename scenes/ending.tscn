@@ -1,0 +1,134 @@
+[gd_scene load_steps=9 format=3 uid="uid://bedyd2d0evam0"]
+
+[ext_resource type="Script" path="res://scripts/ending.gd" id="1_ixloj"]
+[ext_resource type="Texture2D" uid="uid://q1d8ngc53tj8" path="res://assets/background 6.png" id="1_xo367"]
+[ext_resource type="Shader" path="res://assets/background.gdshader" id="2_80k6w"]
+[ext_resource type="Texture2D" uid="uid://c2qdvnq1thi8g" path="res://assets/tela branca.png" id="3_vlgqb"]
+[ext_resource type="FontFile" uid="uid://buq6pog0bo51c" path="res://assets/Minecraft.ttf" id="4_hx7rp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t5w3k"]
+shader = ExtResource("2_80k6w")
+shader_parameter/blur_radius = 0.005
+shader_parameter/darkness = 0.7
+
+[sub_resource type="Gradient" id="Gradient_6gigt"]
+offsets = PackedFloat32Array(0.201299, 0.532468, 0.824675)
+colors = PackedColorArray(0, 0, 0, 1, 0.241156, 0.241156, 0.241156, 1, 0.0454545, 0.0454545, 0.0454545, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tbsr7"]
+gradient = SubResource("Gradient_6gigt")
+fill_from = Vector2(0.2, 0)
+fill_to = Vector2(0.8, 0)
+metadata/_snap_enabled = true
+
+[node name="Ending" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ixloj")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(221.571, 643.706)
+scale = Vector2(1.46783, 1.14403)
+texture = ExtResource("1_xo367")
+region_enabled = true
+region_rect = Rect2(0, 0, 5000, 11000)
+
+[node name="Shader" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_t5w3k")
+position = Vector2(72.0001, 648.25)
+scale = Vector2(1.23429, 1.25605)
+texture = ExtResource("3_vlgqb")
+region_enabled = true
+region_rect = Rect2(0, 0, 7000, 10000)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.687215, 0.687215, 0.687215, 0.490196)
+position = Vector2(328.732, 1381.78)
+scale = Vector2(164.623, 246.029)
+texture = SubResource("GradientTexture2D_tbsr7")
+
+[node name="TitleShadow" type="Label" parent="."]
+offset_left = 367.0
+offset_top = 32.0
+offset_right = 1545.0
+offset_bottom = 232.0
+theme_override_colors/font_color = Color(0, 0, 0, 0.486275)
+theme_override_fonts/font = ExtResource("4_hx7rp")
+theme_override_font_sizes/font_size = 130
+text = "YOU WIN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="."]
+offset_left = 383.0
+offset_top = 16.0
+offset_right = 1553.0
+offset_bottom = 208.0
+theme_override_fonts/font = ExtResource("4_hx7rp")
+theme_override_font_sizes/font_size = 130
+text = "YOU WIN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TitleDepth" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 1928.0
+offset_bottom = 216.0
+theme_override_colors/font_color = Color(0, 0, 0, 0.156863)
+theme_override_fonts/font = ExtResource("4_hx7rp")
+theme_override_font_sizes/font_size = 130
+text = "YOU WIN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Story" type="Label" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 184.0
+offset_right = 1856.0
+offset_bottom = 894.0
+theme_override_font_sizes/font_size = 20
+text = "\"Erebus: Muito bem... herói. Você passou por todas as salas da masmorra, venceu todos que estavam no seu caminho\",
+
+		\"Herói: É isso mesmo, seu deus egoísta. Eu vim acabar com esses seus jogos de dominação. Depois de tanta destruição, não espere um pingo sequer de piedade de mim!\",
+
+		\"Erebus: HAHAHAHAHA! VOCÊ NÃO ENTENDE MESMO, NÃO É!? Uma criança que tinha tudo: família, casa, conforto... mas mesmo assim, você decidiu ir embora e deixar tudo isso de lado, simplesmente porque mais riquezas, mais poder... era tentador, não era? E você ainda acha que tem o direito de me julgar!\",
+
+		\"Herói: Eu não me importo com o que você pensa, eu errei no passado e vim compensar todas as minhas falhas! Você perdeu!\",
+
+		\"Erebus: Isso é sempre divertido, esse diálogo fica cada vez melhor!\",
+
+		\"Herói: Como assim? Que diálogo, seu maldito!?\",
+
+		\"Erebus: O diálogo o qual eu finalmente revelo que você não passa de uma peça no meu teatro. O diálogo em que você descobre que tudo isso é só um passatempo para mim. Você realmente não tem nenhuma ideia do porquê o seu 'rival' era tão parecido com você? HAHAHAHAHAHA! Você nunca foi o único a despertar a Honra do Elysium. Outro antes de você tentaram, várias e várias vezes. O primeiro candidato a me derrotar me divertiu tanto, que eu decidi usá-lo como marionete para estimular o próximo. Pode demorar quantos anos, ou até mesmo séculos para nascer outro, mas sempre que alguém desperta a Honra, eu envio um dos meus lacaios, disfarçado de mensageiro do reino, para chamá-lo até aqui. HAHAHAHAHAHA! ISSO SEMPRE ME ANIMA\",
+
+		\"Herói: O QUE!? Como isso... então eu...\",
+
+		\"Erebus: Sim, isso mesmo, você não é capaz de nada, a vida não é uma peça em que o vilão sempre perde no final. Mas chega de conversa, a partir daqui, você é só mais um dos meus soldados, e irá aguardar o próximo candidato chegar para tirar a sua vida, e consequentemente, me divertir um pouco mais... Adeus.\""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 784.0
+offset_top = 936.0
+offset_right = 1084.0
+offset_bottom = 1036.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="MainMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "RETURN TO MENU"
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "EXIT"
+
+[connection signal="pressed" from="VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

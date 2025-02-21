@@ -23,12 +23,12 @@ shader = ExtResource("1_kwl12")
 shader_parameter/blur_radius = 0.005
 shader_parameter/darkness = 0.7
 
-[sub_resource type="Gradient" id="Gradient_hhaib"]
+[sub_resource type="Gradient" id="Gradient_1ohhm"]
 offsets = PackedFloat32Array(0.201299, 0.532468, 0.824675)
 colors = PackedColorArray(0, 0, 0, 1, 0.241156, 0.241156, 0.241156, 1, 0.0454545, 0.0454545, 0.0454545, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2ctwy"]
-gradient = SubResource("Gradient_hhaib")
+gradient = SubResource("Gradient_1ohhm")
 fill_from = Vector2(0.2, 0)
 fill_to = Vector2(0.8, 0)
 metadata/_snap_enabled = true
@@ -42,13 +42,6 @@ scale = Vector2(1.46783, 1.14403)
 texture = ExtResource("1_ckjfw")
 region_enabled = true
 region_rect = Rect2(0, 0, 5000, 11000)
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-visible = false
-position = Vector2(959, 552)
-energy = 0.57
-shadow_enabled = true
-max_distance = 10.0
 
 [node name="Shader" type="Sprite2D" parent="."]
 texture_repeat = 2

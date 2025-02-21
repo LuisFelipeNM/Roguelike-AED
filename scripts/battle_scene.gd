@@ -18,7 +18,7 @@ signal game_over
 var hero: Node2D
 var hero_stats: Node2D
 
-const MAX_HEIGHT = 16
+const MAX_HEIGHT = 15
 
 # Dicionário de vantagens elementais
 var vantagens = {
@@ -62,7 +62,7 @@ func initialize(original_hero: Node2D, height: int, villain: Node2D):
 		#var villain_body = villain.duplicate()
 		villain.position = enemy.position
 		add_child(villain)
-		enemy.position = Vector2(-200, -200)
+		enemy.visible = false
 		enemy = og_villain
 	else:
 		enemy.set_frame(randi_range(0, 1))
@@ -78,6 +78,10 @@ func _on_button_pressed() -> void:
 	var hero_hit = simular_dado(poder_heroi, poder_vilao)
 
 	print(enemy.health)
+	
+	# testing purposes
+	hero_hit = true
+	
 	if hero_hit:
 		label.text = "Hit!"
 		print("Herói acertou")
@@ -147,6 +151,7 @@ func update_health(target: Node2D):
 		enemy_health.set_frame(3 - enemy.health)
 		
 		if(enemy.health == 0):
+			print("It's over")
 			emit_signal("battle_ended")
 			return
 

@@ -2,7 +2,7 @@ extends Node2D
 
 const ROOM_SPACING_X = 300
 const ROOM_SPACING_Y = 300
-const MAX_HEIGHT = 16
+const MAX_HEIGHT = 15
 const CHAR_SPACING = Vector2(20, 0)
 
 var node_scene = preload("res://scenes/room.tscn")
@@ -87,7 +87,7 @@ func _ready():
 	current_room_node = root
 	hero.history.append(current_room_node)
 	update_elements(hero, root.room_element)
-	update_elements(villain, root.room_element)
+	#update_elements(villain, root.room_element)
 	hero.position = root.position - CHAR_SPACING
 	villain.room = root
 	villain.history.append(current_room_node)
@@ -106,8 +106,6 @@ func generate_tree(node):
 		camera.position = Vector2(root.position.x, node.position.y+ROOM_SPACING_Y)
 		final_room.connect("battle_ended", _on_battle_ended)
 		final_room.connect("game_over", _on_game_over)
-		
-
 		return
 
 	var child_positions = []
@@ -181,7 +179,7 @@ func generate_tree(node):
 		var texto = textos_por_altura.get(height, "Mensagem padrão para altura par.")
 		await display_text_box(texto)  # Usa await para garantir que o diálogo seja exibido antes de continuar
 
-	height += 1
+	
 	current_room_node = node
 
 
@@ -249,6 +247,7 @@ func display_text_box(text: String):
 # Função chamada quando o botão de uma sala é pressionado
 func _on_button_pressed_from_node_scene(node: Node2D):
 	if !is_in_battle:
+		height += 1
 		camera.position = node.position
 
 		# Boss
@@ -293,6 +292,12 @@ func _on_button_pressed_from_node_scene(node: Node2D):
 func _on_battle_ended():
 	is_in_battle = false
 	get_tree().root.remove_child(battle_scene)
+	
+	print("HEIGHT: ", height)
+
+	if((height-1) == MAX_HEIGHT):
+		print("AAAA")
+		get_tree().change_scene_to_file("res://scenes/ending.tscn")
 
 
 func _on_game_over():
