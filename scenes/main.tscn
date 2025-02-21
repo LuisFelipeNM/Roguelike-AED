@@ -23,12 +23,12 @@ shader = ExtResource("1_kwl12")
 shader_parameter/blur_radius = 0.005
 shader_parameter/darkness = 0.7
 
-[sub_resource type="Gradient" id="Gradient_1ohhm"]
+[sub_resource type="Gradient" id="Gradient_lwtsb"]
 offsets = PackedFloat32Array(0.201299, 0.532468, 0.824675)
 colors = PackedColorArray(0, 0, 0, 1, 0.241156, 0.241156, 0.241156, 1, 0.0454545, 0.0454545, 0.0454545, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2ctwy"]
-gradient = SubResource("Gradient_1ohhm")
+gradient = SubResource("Gradient_lwtsb")
 fill_from = Vector2(0.2, 0)
 fill_to = Vector2(0.8, 0)
 metadata/_snap_enabled = true
