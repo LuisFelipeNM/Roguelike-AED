@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="aed_arvore"
+config/name="Hero Journey"
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+boot_splash/name="Hero Journey"
 
 [autoload]
 
