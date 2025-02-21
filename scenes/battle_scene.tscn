@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://b6i2dwxeedqww"]
+[gd_scene load_steps=13 format=3 uid="uid://b6i2dwxeedqww"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_ciov0"]
 [ext_resource type="Texture2D" uid="uid://drf56qesfb377" path="res://assets/sala inimigos.png" id="2_u4bn2"]
+[ext_resource type="FontFile" uid="uid://buq6pog0bo51c" path="res://assets/Minecraft.ttf" id="3_akj6x"]
 [ext_resource type="Texture2D" uid="uid://bxk2xcmxjs6bf" path="res://assets/health.png" id="3_r5uyw"]
 [ext_resource type="Texture2D" uid="uid://d0s5nve6ckhyi" path="res://assets/inimigos.png" id="4_4d162"]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="5_ti6b2"]
@@ -25,6 +26,7 @@ offset_left = 352.0
 offset_top = 640.0
 offset_right = 472.0
 offset_bottom = 696.0
+theme_override_fonts/font = ExtResource("3_akj6x")
 text = "ROLL"
 
 [node name="Health" type="Sprite2D" parent="."]

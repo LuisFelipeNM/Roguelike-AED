@@ -6,6 +6,7 @@ const MAX_HEIGHT = 15
 const CHAR_SPACING = Vector2(20, 0)
 
 var node_scene = preload("res://scenes/room.tscn")
+var fv
 var root: Node2D
 var current_room_node: Node2D
 var height = 1
@@ -80,6 +81,8 @@ var textos_por_altura = {
 
 
 func _ready():
+	fv = FontVariation.new()
+	fv.set_base_font(load("res://assets/Minecraft.ttf"))
 	root = node_scene.instantiate()
 	root.initialize(Vector2(400, 100), 1)
 	root.get_node("Button").disabled = true
@@ -226,6 +229,7 @@ func display_text_box(text: String):
 	# Cria o texto
 	var label = Label.new()
 	label.text = text + "\n\n\n(Pressione espaço para avançar)"
+	label.add_theme_font_override("font", fv)
 	label.modulate = Color(1, 1, 1)  # Cor do texto (branco)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER  # Centraliza o texto horizontalmente
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER  # Centraliza o texto verticalmente
